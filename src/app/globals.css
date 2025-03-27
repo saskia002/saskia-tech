@@ -7,6 +7,7 @@ body,
 html,
 :root {
 	@apply m-0 p-0 w-full h-full max-h-full max-w-full;
+	scrollbar-gutter: stable;
 }
 
 :root {
@@ -43,10 +44,11 @@ html,
 	--sidebar-border: oklch(0.92 0.004 286.32);
 	--sidebar-ring: oklch(0.705 0.015 286.067);
 }
-
 .dark {
-	--background: oklch(0.141 0.005 285.823);
-	--foreground: oklch(0.985 0 0);
+	/*--background: oklch(0.141 0.005 285.823);*/
+	--background: #141417;
+	/*--foreground: oklch(0.985 0 0);*/
+	--foreground: #f9fafb;
 	--card: oklch(0.21 0.006 285.885);
 	--card-foreground: oklch(0.985 0 0);
 	--popover: oklch(0.21 0.006 285.885);

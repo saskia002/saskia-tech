@@ -36,7 +36,7 @@ function TabViewsElements() {
 	);
 }
 
-export default function HomePosts() {
+export default async function HomePosts() {
 	return (
 		<Suspense fallback={<LoadingSpinner />}>
 			<Tabs defaultValue="latest">

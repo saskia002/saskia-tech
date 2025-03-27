@@ -14,7 +14,7 @@ type BlogCardProps = {
 	views: number;
 };
 
-export default function PostCard({ title, created, description, link, category, views }: Readonly<BlogCardProps>) {
+export default async function PostCard({ title, created, description, link, category, views }: Readonly<BlogCardProps>) {
 	return (
 		<Card className="w-full max-w-2xl min-w-[220px]">
 			<div className="flex w-full flex-row">
