@@ -5,7 +5,7 @@ import { fixDateFormat } from "@/util/date-util";
 import DOMPurify from "isomorphic-dompurify";
 import { Separator } from "@/component/ui/separator";
 import AdminControl from "./_component/admin-control";
-import { getPost, incrementPostViewCount } from "./actions";
+import { getPost, incrementPostViewCount } from "./action";
 
 export default async function Page({ params }: Readonly<PageParams>) {
 	const paramData: DynamicPathParams = await params;

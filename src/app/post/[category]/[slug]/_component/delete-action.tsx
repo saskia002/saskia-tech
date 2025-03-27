@@ -3,7 +3,7 @@
 import { Button } from "@/component/ui/button";
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "@/component/ui/dialog";
 import { useState } from "react";
-import { softDeletePost } from "./actions";
+import { softDeletePost } from "./action";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
 

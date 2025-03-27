@@ -12,7 +12,7 @@ type AuthProviderProps = {
 
 export default function AuthProvider({ session, children }: Readonly<AuthProviderProps>) {
 	return (
-		<SessionProvider refetchInterval={5 * 60} session={session}>
+		<SessionProvider refetchInterval={30 * 60} session={session} refetchOnWindowFocus={true}>
 			{children}
 		</SessionProvider>
 	);

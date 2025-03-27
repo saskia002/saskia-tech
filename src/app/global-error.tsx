@@ -1,6 +1,12 @@
 "use client"; // Error boundaries must be Client Components
 
 import { Button } from "@/component/ui/button";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+	title: "Error",
+	description: "Something went wrong",
+};
 
 type GlobalErrorBoundaryProps = {
 	error: Error & { digest?: string };

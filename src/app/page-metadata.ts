@@ -2,8 +2,11 @@ import type { Metadata } from "next";
 
 // Keyword MAXXING :), it works idk how tho :D
 export const pageMetadata: Metadata = {
-	title: "Saskia's website",
-	description: "Portfolio and a blog about coding, design, and other things I find interesting. Saskia Saskia kriibi Blog Bloggi Portfoolio Portfolio",
+	title: {
+		template: "Saskia - %s",
+		default: "Saskia - Homepage",
+	},
+	description: "Saskia Portfolio and a blog about coding, and other things I find interesting.",
 	keywords: [
 		"Saskia",
 		"saskia",
@@ -48,4 +51,9 @@ export const pageMetadata: Metadata = {
 			name: "Saskia Kriibi",
 		},
 	],
+	formatDetection: {
+		email: false,
+		address: false,
+		telephone: false,
+	},
 };

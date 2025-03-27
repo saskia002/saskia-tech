@@ -9,7 +9,7 @@ export default function Header() {
 			<div className="flex w-100 min-w-0 justify-between items-center flex-1 max-w-[1200px]">
 				<Button variant="link" className="text-xl font-bold leading-none" asChild>
 					<Link href="/" replace={true}>
-						<h1 className="p-0 m-0">Saskia's Website</h1>
+						<h1 className="p-0 m-0">Saskia</h1>
 					</Link>
 				</Button>
 				<div className="flex gap-2">

@@ -6,14 +6,11 @@ import AuthProvider from "@/provider/auth-provider";
 import { Toaster } from "@/component/ui/sonner";
 import { pageMetadata } from "@/app/page-metadata";
 import { getServerSession } from "@/lib/auth/server-session";
+import { LayoutProps } from "@/app/model/layout";
 
 export const metadata: Metadata = pageMetadata;
 
-type RootLayoutProps = {
-	children: React.ReactNode;
-};
-
-export default async function RootLayout({ children }: Readonly<RootLayoutProps>) {
+export default async function RootLayout({ children }: Readonly<LayoutProps>) {
 	"use server";
 	const session = await getServerSession();
 

@@ -6,10 +6,7 @@
 body,
 html,
 :root {
-	width: 100%;
-	height: 100%;
-	max-width: 100%;
-	max-height: 100%;
+	@apply m-0 p-0 w-full h-full max-h-full max-w-full;
 }
 
 :root {

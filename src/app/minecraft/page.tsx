@@ -1,4 +1,4 @@
-import { H2, P } from "@/component/ui/custom/typography";
+import { Metadata } from "next";
 
 export default function Page() {
 	return (

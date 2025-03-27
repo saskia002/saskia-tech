@@ -7,19 +7,28 @@ import { useRouter } from "next/navigation";
 import Loading from "./loading";
 import { toast } from "sonner";
 
+export async function Logout(): Promise<void> {
+	const result = await signOut({ redirect: false, callbackUrl: "/" });
+
+	if (!result.url) {
+		throw new Error(`Logout Failed for some reason`);
+	}
+}
+
 export default function Page() {
 	const router = useRouter();
 	const { status } = useSession();
 
-	const logout = () => {
-		signOut();
-
-		if (status === "unauthenticated") {
-			toast.success("You have been logged out");
-			router.push("/");
-		} else if (status === "authenticated") {
-			toast.error("Logout failed, please try again");
-		}
+	const handleAuth = async () => {
+		await Logout()
+			.then(() => {
+				toast.success("You have been logged out");
+				router.push("/");
+			})
+			.catch((error) => {
+				console.error(error);
+				toast.error("Logout failed, please try again");
+			});
 	};
 
 	if (status === "loading") {
@@ -36,7 +45,7 @@ export default function Page() {
 							<CardDescription>Are you sure you want to log out?</CardDescription>
 						</CardHeader>
 						<CardContent>
-							<Button onClick={() => logout()} className="w-full text-wrap whitespace-break-spaces h-max">
+							<Button onClick={() => handleAuth()} className="w-full text-wrap whitespace-break-spaces h-max">
 								Yes
 							</Button>
 						</CardContent>

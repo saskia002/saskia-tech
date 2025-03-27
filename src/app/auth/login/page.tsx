@@ -2,24 +2,30 @@
 
 import { Button } from "@/component/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/component/ui/card";
-import { signIn, useSession } from "next-auth/react";
-import { useRouter } from "next/navigation";
+import { useSession, signIn } from "next-auth/react";
 import Loading from "./loading";
 import { toast } from "sonner";
 
+export async function Login(type: string): Promise<void> {
+	const result = await signIn(type, { redirect: true, callbackUrl: "/" });
+
+	if (result?.error) {
+		throw new Error(`Login Failed: ${result?.error}`);
+	}
+}
+
 export default function Page() {
-	const router = useRouter();
 	const { status } = useSession();
 
-	const login = () => {
-		signIn("github");
-
-		if (status === "authenticated") {
-			toast.success("You have been logged in");
-			router.push("/");
-		} else if (status === "unauthenticated") {
-			toast.error("Login failed, please try again");
-		}
+	const handleAuth = async () => {
+		await Login("github")
+			.then(() => {
+				toast.success("You have been logged in");
+			})
+			.catch((error) => {
+				console.error(error);
+				toast.error("Login failed, please try again");
+			});
 	};
 
 	if (status === "loading") {
@@ -39,7 +45,7 @@ export default function Page() {
 							{/*<Button className="w-full text-wrap whitespace-break-spaces h-max mb-3" onClick={() => signIn("google")}>
 								Login with Google
 							</Button>*/}
-							<Button className="w-full text-wrap whitespace-break-spaces h-max" onClick={login}>
+							<Button className="w-full text-wrap whitespace-break-spaces h-max" onClick={() => handleAuth()}>
 								Login with GitHub
 							</Button>
 						</CardContent>
