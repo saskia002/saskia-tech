@@ -1,6 +1,6 @@
-"use client";
-import { Button } from "@/component/ui/shadcn/button";
-import { H2 } from "@/component/ui/custom/typography";
+"use client"; // Error boundaries must be Client Components
+
+import { Button } from "@/component/ui/button";
 
 type GlobalErrorBoundaryProps = {
 	error: Error & { digest?: string };
@@ -15,7 +15,7 @@ export default function GlobalError({ error, reset }: Readonly<GlobalErrorBounda
 			<body>
 				<main className="w-full h-full flex justify-center">
 					<section className="w-full max-w-3/4">
-						<H2 className="mb-4">Something went wrong!</H2>
+						<h2 className="mb-4">Something went wrong!</h2>
 						<div>
 							<Button onClick={() => reset()}> Try again </Button>
 						</div>

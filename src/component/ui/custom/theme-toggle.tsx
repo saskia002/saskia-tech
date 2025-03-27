@@ -3,8 +3,8 @@
 import { Moon, Sun, SunMoon } from "lucide-react";
 import { useTheme } from "next-themes";
 
-import { Button } from "@/component/ui/shadcn/button";
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/component/ui/shadcn/dropdown-menu";
+import { Button } from "@/component/ui/button";
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/component/ui/dropdown-menu";
 
 export function ThemeToggle() {
 	const { setTheme } = useTheme();

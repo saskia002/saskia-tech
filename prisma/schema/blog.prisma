@@ -1,15 +1,16 @@
-
-
 // Auth models
 
 model User {
-  id            String          @id @default(cuid())
+  id            String    @id @default(cuid())
   name          String?
-  email         String          @unique
+  email         String    @unique
   emailVerified DateTime?
   image         String?
   accounts      Account[]
   sessions      Session[]
+
+  role String? // New column
+
   // Optional for WebAuthn support
   Authenticator Authenticator[]
 
@@ -81,53 +82,54 @@ model Authenticator {
   @@schema("blog")
 }
 
-
 // Blog models
 
 model Category {
-  id    String  @id @default(cuid()) @map("_id")
-  slug  String  @unique
-  title String
+  code  String  @id @unique
+  name  String  @unique
   img   String?
   Posts Post[]
 
-  created   DateTime @default(now())
-  edited    DateTime @default(now())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
   deleted   Boolean  @default(false)
 
   @@schema("blog")
 }
 
 model Post {
-  id              String    @id @default(cuid()) @map("_id")
-  slug            String    @unique
-  title           String
-  desc            String
-  img             String?
-  views           Int       @default(0)
-  categorySlug    String
-  category        Category  @relation(fields: [categorySlug], references: [slug])
-  userEmail       String
-  user            User      @relation(fields: [userEmail], references: [email])
-  comments        Comment[]
+  id           Int       @id @default(autoincrement())
+  slug         String    @unique
+  title        String
+  description  String
+  content      String
+  img          String?
+  views        Int       @default(0)
+  categoryCode String
+  category     Category  @relation(fields: [categoryCode], references: [code])
+  userEmail    String
+  user         User      @relation(fields: [userEmail], references: [email])
+  comments     Comment[]
 
-  created   DateTime @default(now())
-  edited    DateTime @default(now())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
   deleted   Boolean  @default(false)
+
+  public Boolean @default(false)
 
   @@schema("blog")
 }
 
 model Comment {
-  id        String   @id @default(cuid()) @map("_id")
-  desc      String
-  userEmail String
-  user      User     @relation(fields: [userEmail], references: [email])
-  postSlug  String
-  post      Post     @relation(fields: [postSlug], references: [slug])
-  created   DateTime @default(now())
-  edited    DateTime @default(now())
-  deleted   Boolean  @default(false)
+  id          Int      @id @default(autoincrement())
+  description String
+  userEmail   String
+  user        User     @relation(fields: [userEmail], references: [email])
+  postSlug    String
+  post        Post     @relation(fields: [postSlug], references: [slug])
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  deleted     Boolean  @default(false)
 
   @@schema("blog")
 }

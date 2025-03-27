@@ -1,6 +1,4 @@
-import { JSX } from "react";
-
-export default function LoadingSpinner(): JSX.Element {
+export default function LoadingSpinner() {
 	return (
 		<main className="w-full h-full flex mt-10 justify-center">
 			<section className="text-center">
