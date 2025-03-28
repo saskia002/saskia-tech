@@ -42,9 +42,6 @@ export default function Page() {
 							<CardDescription>* Only GitHub OAuth is supported</CardDescription>
 						</CardHeader>
 						<CardContent>
-							{/*<Button className="w-full text-wrap whitespace-break-spaces h-max mb-3" onClick={() => signIn("google")}>
-								Login with Google
-							</Button>*/}
 							<Button className="w-full text-wrap whitespace-break-spaces h-max" onClick={() => handleAuth()}>
 								Login with GitHub
 							</Button>

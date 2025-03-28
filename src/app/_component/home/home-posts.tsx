@@ -1,10 +1,11 @@
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/component/ui/tabs";
 import { Suspense } from "react";
-import LatestPosts from "./_compoment/_post-types/latest-posts";
-import LoadingSpinner from "@/component/ui/custom/loading-spinner";
-import DevelopmentPosts from "./_compoment/_post-types/development-posts";
+import LatestPosts from "./_compoment/post-types/latest-posts";
+import MainLoadingSpinner from "@/component/ui/custom/main-loading-spinner";
+import DevelopmentPosts from "./_compoment/post-types/development-posts";
 import { capitalizeFirstLetter } from "@/util/string-util";
-import OtherPosts from "./_compoment/_post-types/other-posts";
+import OtherPosts from "./_compoment/post-types/other-posts";
+import LoadingSpinner from "@/component/ui/custom/loading-spinner";
 
 const ListTiggers = [
 	{ name: "latest", component: <LatestPosts /> },
@@ -38,7 +39,7 @@ function TabViewsElements() {
 
 export default async function HomePosts() {
 	return (
-		<Suspense fallback={<LoadingSpinner />}>
+		<div className="max-w-2xl">
 			<Tabs defaultValue="latest">
 				<div className="max-xs:hidden">
 					<TabsList className="flex w-full max-w-2xl">
@@ -50,8 +51,10 @@ export default async function HomePosts() {
 						<TabElements />
 					</TabsList>
 				</div>
-				<TabViewsElements />
+				<Suspense fallback={<LoadingSpinner />}>
+					<TabViewsElements />
+				</Suspense>
 			</Tabs>
-		</Suspense>
+		</div>
 	);
 }

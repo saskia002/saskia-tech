@@ -2,7 +2,6 @@ import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle }
 import { ChevronsRight } from "lucide-react";
 import Link from "next/link";
 import { Button } from "@/component/ui/button";
-import { fixDateFormat } from "@/util/date-util";
 import { capitalizeFirstLetter } from "@/util/string-util";
 import { getServerSession } from "@/lib/auth/server-session";
 

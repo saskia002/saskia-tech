@@ -57,7 +57,9 @@ export async function getOtherPosts() {
 	return await prisma.post.findMany({
 		where: {
 			isDeleted: false,
-			categoryCode: "other",
+			categoryCode: {
+				not: "development",
+			},
 			...(auth ? {} : { isPublic: true }),
 		},
 		orderBy: {
