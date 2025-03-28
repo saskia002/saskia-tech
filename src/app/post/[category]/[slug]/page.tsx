@@ -1,4 +1,4 @@
-import { DynamicPathParams, PageParams, PostData } from "./model";
+import { DynamicPathParams, PageParams, Post } from "./model";
 import { fixDateFormat } from "@/util/date-util";
 import DOMPurify from "isomorphic-dompurify";
 import { Separator } from "@/component/ui/separator";
@@ -10,7 +10,7 @@ import { getServerSession } from "@/lib/auth/server-session";
 export default async function Page({ params }: Readonly<PageParams>) {
 	const auth = await getServerSession();
 	const paramData: DynamicPathParams = await params;
-	const post: PostData | null = await getPost(paramData);
+	const post: Post | null = await getPost(paramData.category, paramData.slug);
 	if (!post) {
 		notFound();
 	}

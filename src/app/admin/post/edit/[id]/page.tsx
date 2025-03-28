@@ -1,30 +1,36 @@
-"use client";
+import { getServerSession } from "@/lib/auth/server-session";
+import { getCategories, getPost } from "./action";
+import Pagecontent from "./page-content";
+import { notFound } from "next/navigation";
+import { number } from "zod";
+import { Post } from "./model";
 
-import { useSession } from "next-auth/react";
+export type DynamicPathParams = {
+	id: number;
+};
 
-import { toast } from "sonner";
-import Loading from "./loading";
-import { useRouter } from "next/navigation";
+type PageParams = {
+	params: Promise<DynamicPathParams>;
+};
 
-export default function Page() {
-	const router = useRouter();
-	const { status } = useSession({
-		required: true,
-		onUnauthenticated() {
-			toast.success("You must be logged in to edit a blog");
-			router.push("/");
-		},
-	});
-
-	if (status === "loading") {
-		return <Loading />;
+export default async function Page({ params }: Readonly<PageParams>) {
+	const auth = await getServerSession();
+	if (!auth) {
+		throw new Error("You must be logged in to write a blog");
 	}
 
-	return (
-		<main className="w-full h-max inline-flex flex-col items-center gap-8">
-			<section className="flex flex-col w-4/6 max-w-[1000px] gap-4">
-				<p>edit</p>
-			</section>
-		</main>
-	);
+	const paramData: DynamicPathParams = await params;
+	const id: number = Number(paramData.id);
+	if (isNaN(id) || typeof id !== "number") {
+		throw new Error("Invalid id, type is not number");
+	}
+
+	const post: Post | null = await getPost(id);
+	if (!post) {
+		notFound();
+	}
+
+	const categories = await getCategories();
+
+	return <Pagecontent post={post} categories={categories} />;
 }

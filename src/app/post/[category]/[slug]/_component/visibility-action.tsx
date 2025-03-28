@@ -35,7 +35,7 @@ export default function VisibilityAction({ postId, isPublic }: Readonly<Visibili
 			</DialogTrigger>
 			<DialogContent className="sm:max-w-[425px]">
 				<DialogHeader>
-					<DialogTitle>{isPublic ? "Unpublish" : "Publish"} Post</DialogTitle>
+					<DialogTitle className="mb-0!">{isPublic ? "Unpublish" : "Publish"} Post</DialogTitle>
 					<DialogDescription>This action cannot be undone.</DialogDescription>
 				</DialogHeader>
 				<DialogFooter>

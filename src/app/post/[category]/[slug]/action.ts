@@ -1,15 +1,15 @@
 "use server";
 
 import { prisma } from "@/lib/prisma";
-import { DynamicPathParams, PostData } from "./model";
+import { Post } from "./model";
 import { getServerSession } from "@/lib/auth/server-session";
 
-export async function getPost(pathParams: DynamicPathParams): Promise<PostData | null> {
+export async function getPost(category: string, slug: string): Promise<Post | null> {
 	return await prisma.post.findFirst({
 		where: {
 			isDeleted: false,
-			categoryCode: pathParams.category,
-			slug: pathParams.slug,
+			categoryCode: category,
+			slug: slug,
 		},
 		select: {
 			id: true,

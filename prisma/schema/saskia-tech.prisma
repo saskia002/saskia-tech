@@ -1,0 +1,72 @@
+// Auth models
+
+model User {
+  //id       String    @id @default(cuid())
+  username String    @id @unique
+  name     String?
+  password String
+  //email         String?   @unique
+  //emailVerified DateTime? @map("email_verified")
+  image    String?
+  Post     Post[]
+  Comment  Comment[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  isDeleted Boolean  @default(false)
+
+  @@map("users")
+  @@schema("saskia-tech")
+}
+
+// Blog models
+
+model Category {
+  code  String  @id @unique
+  name  String  @unique
+  img   String?
+  Posts Post[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  isDeleted Boolean  @default(false)
+
+  @@schema("saskia-tech")
+}
+
+model Post {
+  id           Int       @id @default(autoincrement())
+  slug         String    @unique
+  title        String
+  description  String
+  content      String
+  img          String?
+  views        Int       @default(0)
+  categoryCode String
+  category     Category  @relation(fields: [categoryCode], references: [code])
+  username     String
+  user         User      @relation(fields: [username], references: [username])
+  comments     Comment[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  isDeleted Boolean  @default(false)
+
+  isPublic Boolean @default(false)
+
+  @@schema("saskia-tech")
+}
+
+model Comment {
+  id          Int      @id @default(autoincrement())
+  description String
+  username    String
+  user        User     @relation(fields: [username], references: [username])
+  postSlug    String
+  post        Post     @relation(fields: [postSlug], references: [slug])
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  isDeleted   Boolean  @default(false)
+
+  @@schema("saskia-tech")
+}

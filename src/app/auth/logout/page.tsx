@@ -36,7 +36,7 @@ export default function Page() {
 	}
 
 	return (
-		<main className="w-full h-100 flex flex-col items-center">
+		<main className="w-full h-max flex flex-col items-center my-5">
 			<section className="flex flex-col mt-5 w-full max-w-xs ">
 				<div>
 					<Card>

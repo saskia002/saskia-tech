@@ -34,7 +34,7 @@ export default function DeleteAction({ postId }: Readonly<DeleteActionProps>) {
 			</DialogTrigger>
 			<DialogContent className="sm:max-w-[425px]">
 				<DialogHeader>
-					<DialogTitle>Delete Post</DialogTitle>
+					<DialogTitle className="mb-0!">Delete Post</DialogTitle>
 					<DialogDescription>This action cannot be undone. This will permanently delete the post!</DialogDescription>
 				</DialogHeader>
 				<DialogFooter>

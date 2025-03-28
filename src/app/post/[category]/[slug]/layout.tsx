@@ -1,11 +1,11 @@
 import { LayoutProps } from "@/app/model/layout";
 import { getPost } from "./action";
-import { DynamicPathParams, PageParams, PostData } from "./model";
+import { DynamicPathParams, PageParams, Post } from "./model";
 import { Metadata } from "next";
 
 export async function generateMetadata({ params }: Readonly<PageParams>): Promise<Metadata> {
 	const paramData: DynamicPathParams = await params;
-	const data: PostData | null = await getPost(paramData);
+	const data: Post | null = await getPost(paramData.category, paramData.slug);
 
 	if (data) {
 		return {

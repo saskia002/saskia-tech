@@ -1,24 +1,27 @@
 "use client";
 
-import { useRef, useMemo, useTransition, useEffect, useState } from "react";
-import "react-quill-new/dist/quill.snow.css";
-import { Button } from "@/component/ui/button";
+import { LocalStoragePostData, Post } from "./model";
+import { useEffect, useMemo, useRef, useState, useTransition } from "react";
 import dynamic from "next/dynamic";
 import ReactQuill, { DeltaStatic } from "react-quill-new";
+import "react-quill-new/dist/quill.snow.css";
+import { reziseImage } from "@/util/image-util";
+import { Category } from "@prisma/client";
+import { updatePost } from "./action";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
-import { reziseImage } from "@/util/image-util";
+import { fixDateFormat } from "@/util/date-util";
+import { Button } from "@/component/ui/button";
 import { Input } from "@/component/ui/input";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/component/ui/select";
-import { Category, LocalStoragePostData } from "./model";
-import { savePost } from "./action";
 import { Textarea } from "@/component/ui/textarea";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/component/ui/select";
 
 type PagecontentProps = {
+	post: Post;
 	categories: Category[];
 };
 
-export default function Pagecontent({ categories }: Readonly<PagecontentProps>) {
+export default function Pagecontent({ post, categories }: Readonly<PagecontentProps>) {
 	const router = useRouter();
 	const ReactQuill = useMemo(() => dynamic(() => import("react-quill-new"), { ssr: false }), []);
 	const quillRef = useRef<ReactQuill | null>(null);
@@ -89,7 +92,7 @@ export default function Pagecontent({ categories }: Readonly<PagecontentProps>) 
 			formData.append("content", quillRef.current?.getEditor().getSemanticHTML() ?? "");
 
 			startTransition(async () => {
-				await savePost(formData)
+				await updatePost(post.id, formData)
 					.then(() => {
 						toast.success("Post saved successfully!");
 						router.push("/");
@@ -101,20 +104,39 @@ export default function Pagecontent({ categories }: Readonly<PagecontentProps>) 
 			});
 		};
 
-		const resetAction = (e: React.FormEvent<HTMLFormElement>) => {
-			e.preventDefault();
-			localStorage.removeItem("ADMIN_POST_WRITER_DATA");
-			location.reload();
-		};
-
-		const getLocalStoragePostData = (): LocalStoragePostData | undefined => {
-			const data = localStorage.getItem("ADMIN_POST_WRITER_DATA");
-			return data ? JSON.parse(data) : undefined;
-		};
-
 		// Restore Editor state on load
 		// TODO: fix category dropdown not setting value correctly
 		useEffect(() => {
+			const form = formRef?.current;
+
+			if (form) {
+				const title = form.querySelector('[name="title"]') as HTMLInputElement;
+				const description = form.querySelector('[name="description"]') as HTMLInputElement;
+				const category = form.querySelector('[name="category"]') as HTMLInputElement;
+				const jsonData = getLocalStoragePostData();
+
+				if (jsonData) {
+					title.value = post.title;
+					description.value = post.description;
+					category.value = post.categoryCode;
+					setQuillInitData(post.content ?? "");
+				}
+			}
+		}, []);
+
+		const getLocalStoragePostData = (): LocalStoragePostData | undefined => {
+			const data = localStorage.getItem("ADMIN_POST_EDITOR_DATA");
+			return data ? JSON.parse(data) : undefined;
+		};
+
+		const clearCache = (e: React.MouseEvent<HTMLButtonElement>) => {
+			e.preventDefault();
+			localStorage.removeItem("ADMIN_POST_EDITOR_DATA");
+			location.reload();
+		};
+
+		const loadFromCache = (e: React.MouseEvent<HTMLButtonElement>) => {
+			e.preventDefault();
 			const form = formRef?.current;
 
 			if (form) {
@@ -130,7 +152,7 @@ export default function Pagecontent({ categories }: Readonly<PagecontentProps>) 
 					setQuillInitData(jsonData.content ?? "");
 				}
 			}
-		}, []);
+		};
 
 		// Autosave editor after each 10 seconds
 		useEffect(() => {
@@ -145,7 +167,7 @@ export default function Pagecontent({ categories }: Readonly<PagecontentProps>) 
 						content: quillRef.current?.getEditor().getContents(),
 					};
 
-					localStorage.setItem("ADMIN_POST_WRITER_DATA", JSON.stringify(jsonData));
+					localStorage.setItem("ADMIN_POST_EDITOR_DATA", JSON.stringify(jsonData));
 				}
 			}, 10000);
 
@@ -155,14 +177,24 @@ export default function Pagecontent({ categories }: Readonly<PagecontentProps>) 
 		return (
 			<main className="w-full h-max inline-flex flex-col items-center">
 				<section className=" w-4/6 max-w-[1000px]">
-					<form ref={formRef} className="flex flex-col gap-4" onSubmit={submitAction} onReset={resetAction}>
-						<div className="flex w-full justify-between gap-3 mb-3">
-							<Button variant="ghost" type="reset" disabled={isFormPending}>
-								Clear cache
-							</Button>
+					<form ref={formRef} className="flex flex-col gap-4" onSubmit={submitAction}>
+						<div className="flex w-full justify-between gap-3 mb-3 flex-wrap">
+							<div className="flex gap-3 flex-wrap">
+								<Button variant="ghost" onClick={(e) => clearCache(e)} disabled={isFormPending}>
+									Clear cache
+								</Button>
+								<Button variant="ghost" onClick={(e) => loadFromCache(e)} disabled={isFormPending}>
+									Load cache
+								</Button>
+							</div>
 							<Button type="submit" disabled={isFormPending}>
-								Post
+								Update
 							</Button>
+						</div>
+						<div className="block w-fit max-w-2xl mb-4">
+							<p>{`${fixDateFormat(post.createdAt)} EET`}</p>
+							<p className="mt-1!">{`${post.categoryCode}, ${post.views} views`}</p>
+							<p className="mt-1!">{post.isPublic ? "Public" : "Private"}</p>
 						</div>
 						<div>
 							<h3 className="mb-3">Title</h3>

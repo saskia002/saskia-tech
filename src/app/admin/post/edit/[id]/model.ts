@@ -10,11 +10,14 @@ export type Post = {
 	isPublic: boolean;
 };
 
-export type DynamicPathParams = {
-	slug: string;
-	category: string;
+export type Category = {
+	code: string;
+	name: string;
 };
 
-export type PageParams = {
-	params: Promise<DynamicPathParams>;
+export type LocalStoragePostData = {
+	title: string;
+	description: string;
+	category: string;
+	content?: DeltaStatic;
 };
