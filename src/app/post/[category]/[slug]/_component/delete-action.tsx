@@ -30,7 +30,7 @@ export default function DeleteAction({ postId }: Readonly<DeleteActionProps>) {
 	return (
 		<Dialog open={isDeleteActionOpen} onOpenChange={setIsDeleteActionOpen}>
 			<DialogTrigger asChild>
-				<Button variant="outline">Delete</Button>
+				<Button variant="ghost">Delete</Button>
 			</DialogTrigger>
 			<DialogContent className="sm:max-w-[425px]">
 				<DialogHeader>

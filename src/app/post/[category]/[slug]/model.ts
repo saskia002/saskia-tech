@@ -7,6 +7,7 @@ export type PostData = {
 	content: string;
 	views: number;
 	categoryCode: string;
+	isPublic: boolean;
 };
 
 export type DynamicPathParams = {

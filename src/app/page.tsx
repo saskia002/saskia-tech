@@ -1,7 +1,7 @@
 import { Button } from "@/component/ui/button";
 import { Github } from "lucide-react";
 import SimpleTooltip from "@/component/ui/custom/simple-tooltip";
-import HomePosts from "@/app/_component/post/home/home-posts";
+import HomePosts from "@/app/_component/home/home-posts";
 
 export default function Home() {
 	return (

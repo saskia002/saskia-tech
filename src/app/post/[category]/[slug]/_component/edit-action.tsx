@@ -2,7 +2,6 @@
 
 import { Button } from "@/component/ui/button";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
 
 type EditActionProps = {
 	postId: number;

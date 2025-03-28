@@ -6,4 +6,5 @@ export type Post = {
 	description: string;
 	views: number;
 	categoryCode: string;
+	isPublic: boolean;
 };

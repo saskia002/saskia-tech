@@ -1,35 +1,20 @@
 import { DynamicPathParams, PageParams, PostData } from "./model";
-import { Button } from "@/component/ui/button";
-import Link from "next/link";
 import { fixDateFormat } from "@/util/date-util";
 import DOMPurify from "isomorphic-dompurify";
 import { Separator } from "@/component/ui/separator";
 import AdminControl from "./_component/admin-control";
 import { getPost, incrementPostViewCount } from "./action";
+import { notFound } from "next/navigation";
+import { getServerSession } from "@/lib/auth/server-session";
 
 export default async function Page({ params }: Readonly<PageParams>) {
+	const auth = await getServerSession();
 	const paramData: DynamicPathParams = await params;
-	let post!: PostData;
-
-	const data: PostData | null = await getPost(paramData);
-	if (data) {
-		post = data;
-		await incrementPostViewCount(data.id);
-	}
-
+	const post: PostData | null = await getPost(paramData);
 	if (!post) {
-		return (
-			<main className="w-full h-full flex justify-center">
-				<section className="w-full max-w-3/4">
-					<h2>Not Found</h2>
-					<p className="mb-3">Could not find requested post</p>
-					<Button asChild>
-						<Link href="/">Return to Homepage</Link>
-					</Button>
-				</section>
-			</main>
-		);
+		notFound();
 	}
+	await incrementPostViewCount(post.id);
 
 	const sanitizedContent: string = DOMPurify.sanitize(post.content);
 
@@ -40,7 +25,8 @@ export default async function Page({ params }: Readonly<PageParams>) {
 					<h2 className="text-balance">{post.title}</h2>
 					<p>{`${fixDateFormat(post.createdAt)} EET`}</p>
 					<p className="mt-1!">{`${post.categoryCode}, ${post.views} views`}</p>
-					<AdminControl postId={post.id} />
+					{auth && <p className="mt-1!">{post.isPublic ? "Public" : "Private"}</p>}
+					<AdminControl postId={post.id} isPublic={post.isPublic} />
 					<Separator className="mt-4 mb-6" />
 				</div>
 				<div dangerouslySetInnerHTML={{ __html: sanitizedContent }} />

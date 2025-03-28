@@ -19,8 +19,8 @@ export default function GlobalError({ error, reset }: Readonly<GlobalErrorBounda
 		// global-error must include html and body tags
 		<html lang="en">
 			<body>
-				<main className="w-full h-full flex justify-center">
-					<section className="w-full max-w-3/4">
+				<main className="w-full h-100 flex justify-center">
+					<section className="w-4/6 max-w-[1000px]">
 						<h2 className="mb-4">Something went wrong!</h2>
 						<div>
 							<Button onClick={() => reset()}> Try again </Button>

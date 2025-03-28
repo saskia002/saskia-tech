@@ -1,21 +1,21 @@
-import { getDevelopmentPosts } from "./actions";
 import BlogCard from "../post-card";
+import { getOtherPosts } from "./actions";
 import { Post } from "./model";
 
 function getPostLink(post: Post): string {
 	return `/post/${post.categoryCode}/${post.slug}`;
 }
 
-export default async function DevelopmentPosts() {
-	const developmentPosts: Post[] = await getDevelopmentPosts();
+export default async function OtherPosts() {
+	const otherPosts: Post[] = await getOtherPosts();
 
-	if (developmentPosts.length === 0) {
+	if (otherPosts.length === 0) {
 		return <p>No posts were fond.</p>;
 	}
 
 	return (
 		<div className="flex flex-row gap-5 flex-wrap">
-			{developmentPosts.map((post) => {
+			{otherPosts.map((post) => {
 				return (
 					<BlogCard
 						key={post.id}
@@ -24,6 +24,7 @@ export default async function DevelopmentPosts() {
 						link={getPostLink(post)}
 						description={post.description}
 						views={post.views}
+						isPublic={post.isPublic}
 					/>
 				);
 			})}

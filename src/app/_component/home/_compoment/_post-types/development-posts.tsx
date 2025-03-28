@@ -1,4 +1,4 @@
-import { getLatestPosts } from "./actions";
+import { getDevelopmentPosts } from "./actions";
 import BlogCard from "../post-card";
 import { Post } from "./model";
 
@@ -6,16 +6,16 @@ function getPostLink(post: Post): string {
 	return `/post/${post.categoryCode}/${post.slug}`;
 }
 
-export default async function LatestPosts() {
-	const LatestPosts: Post[] = await getLatestPosts();
+export default async function DevelopmentPosts() {
+	const developmentPosts: Post[] = await getDevelopmentPosts();
 
-	if (LatestPosts.length === 0) {
+	if (developmentPosts.length === 0) {
 		return <p>No posts were fond.</p>;
 	}
 
 	return (
 		<div className="flex flex-row gap-5 flex-wrap">
-			{LatestPosts.map((post) => {
+			{developmentPosts.map((post) => {
 				return (
 					<BlogCard
 						key={post.id}
@@ -23,8 +23,8 @@ export default async function LatestPosts() {
 						created={post.createdAt}
 						link={getPostLink(post)}
 						description={post.description}
-						category={post.categoryCode}
 						views={post.views}
+						isPublic={post.isPublic}
 					/>
 				);
 			})}

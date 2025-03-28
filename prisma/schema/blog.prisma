@@ -92,7 +92,7 @@ model Category {
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
-  deleted   Boolean  @default(false)
+  isDeleted Boolean  @default(false)
 
   @@schema("blog")
 }
@@ -113,9 +113,9 @@ model Post {
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
-  deleted   Boolean  @default(false)
+  isDeleted Boolean  @default(false)
 
-  public Boolean @default(false)
+  isPublic Boolean @default(false)
 
   @@schema("blog")
 }
@@ -129,7 +129,7 @@ model Comment {
   post        Post     @relation(fields: [postSlug], references: [slug])
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
-  deleted     Boolean  @default(false)
+  isDeleted   Boolean  @default(false)
 
   @@schema("blog")
 }
