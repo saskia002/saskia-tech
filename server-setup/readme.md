@@ -62,3 +62,30 @@ NB! Istall all of the requirements before these setps.
     ```
 
 4. Profit 8-)
+
+## Other
+
+-   (optional) Slect correct TZ: `tzselect`
+
+    Change PostgreSQL timzone:
+
+    ```
+    sudo -u postgres psql
+
+    \c web
+    SHOW TIMEZONE;
+    SELECT * FROM pg_timezone_names;
+    \q
+
+    sudo -u postgres psql
+    ALTER DATABASE web SET TIMEZONE TO 'EET';
+    ```
+
+-   Other commands:
+
+    ```
+    SELECT pg_terminate_backend(pid)
+    FROM pg_stat_activity
+    WHERE datname = 'web' AND pid <> pg_backend_pid();
+
+    ```
