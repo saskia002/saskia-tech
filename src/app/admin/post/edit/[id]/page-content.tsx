@@ -1,12 +1,11 @@
 "use client";
 
-import { LocalStoragePostData, Post } from "./model";
+import { Category, LocalStoragePostData, Post } from "./model";
 import { useEffect, useMemo, useRef, useState, useTransition } from "react";
 import dynamic from "next/dynamic";
 import ReactQuill, { DeltaStatic } from "react-quill-new";
 import "react-quill-new/dist/quill.snow.css";
 import { reziseImage } from "@/util/image-util";
-import { Category } from "@prisma/client";
 import { updatePost } from "./action";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
@@ -176,7 +175,7 @@ export default function Pagecontent({ post, categories }: Readonly<PagecontentPr
 
 		return (
 			<main className="w-full h-max inline-flex flex-col items-center">
-				<section className=" w-4/6 max-w-[1000px]">
+				<section className="min-sm:w-4/6 max-w-[1000px] max-sm:w-8/10">
 					<form ref={formRef} className="flex flex-col gap-4" onSubmit={submitAction}>
 						<div className="flex w-full justify-between gap-3 mb-3 flex-wrap">
 							<div className="flex gap-3 flex-wrap">

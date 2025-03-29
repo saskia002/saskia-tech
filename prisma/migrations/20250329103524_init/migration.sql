@@ -1,8 +1,8 @@
 -- CreateSchema
-CREATE SCHEMA IF NOT EXISTS "saskia-tech";
+CREATE SCHEMA IF NOT EXISTS "web";
 
 -- CreateTable
-CREATE TABLE "saskia-tech"."users" (
+CREATE TABLE "web"."users" (
     "username" TEXT NOT NULL,
     "name" TEXT,
     "password" TEXT NOT NULL,
@@ -15,7 +15,7 @@ CREATE TABLE "saskia-tech"."users" (
 );
 
 -- CreateTable
-CREATE TABLE "saskia-tech"."Category" (
+CREATE TABLE "web"."Category" (
     "code" TEXT NOT NULL,
     "name" TEXT NOT NULL,
     "img" TEXT,
@@ -27,7 +27,7 @@ CREATE TABLE "saskia-tech"."Category" (
 );
 
 -- CreateTable
-CREATE TABLE "saskia-tech"."Post" (
+CREATE TABLE "web"."Post" (
     "id" SERIAL NOT NULL,
     "slug" TEXT NOT NULL,
     "title" TEXT NOT NULL,
@@ -46,7 +46,7 @@ CREATE TABLE "saskia-tech"."Post" (
 );
 
 -- CreateTable
-CREATE TABLE "saskia-tech"."Comment" (
+CREATE TABLE "web"."Comment" (
     "id" SERIAL NOT NULL,
     "description" TEXT NOT NULL,
     "username" TEXT NOT NULL,
@@ -59,25 +59,25 @@ CREATE TABLE "saskia-tech"."Comment" (
 );
 
 -- CreateIndex
-CREATE UNIQUE INDEX "users_username_key" ON "saskia-tech"."users"("username");
+CREATE UNIQUE INDEX "users_username_key" ON "web"."users"("username");
 
 -- CreateIndex
-CREATE UNIQUE INDEX "Category_code_key" ON "saskia-tech"."Category"("code");
+CREATE UNIQUE INDEX "Category_code_key" ON "web"."Category"("code");
 
 -- CreateIndex
-CREATE UNIQUE INDEX "Category_name_key" ON "saskia-tech"."Category"("name");
+CREATE UNIQUE INDEX "Category_name_key" ON "web"."Category"("name");
 
 -- CreateIndex
-CREATE UNIQUE INDEX "Post_slug_key" ON "saskia-tech"."Post"("slug");
+CREATE UNIQUE INDEX "Post_slug_key" ON "web"."Post"("slug");
 
 -- AddForeignKey
-ALTER TABLE "saskia-tech"."Post" ADD CONSTRAINT "Post_categoryCode_fkey" FOREIGN KEY ("categoryCode") REFERENCES "saskia-tech"."Category"("code") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "web"."Post" ADD CONSTRAINT "Post_categoryCode_fkey" FOREIGN KEY ("categoryCode") REFERENCES "web"."Category"("code") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "saskia-tech"."Post" ADD CONSTRAINT "Post_username_fkey" FOREIGN KEY ("username") REFERENCES "saskia-tech"."users"("username") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "web"."Post" ADD CONSTRAINT "Post_username_fkey" FOREIGN KEY ("username") REFERENCES "web"."users"("username") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "saskia-tech"."Comment" ADD CONSTRAINT "Comment_username_fkey" FOREIGN KEY ("username") REFERENCES "saskia-tech"."users"("username") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "web"."Comment" ADD CONSTRAINT "Comment_username_fkey" FOREIGN KEY ("username") REFERENCES "web"."users"("username") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "saskia-tech"."Comment" ADD CONSTRAINT "Comment_postSlug_fkey" FOREIGN KEY ("postSlug") REFERENCES "saskia-tech"."Post"("slug") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "web"."Comment" ADD CONSTRAINT "Comment_postSlug_fkey" FOREIGN KEY ("postSlug") REFERENCES "web"."Post"("slug") ON DELETE RESTRICT ON UPDATE CASCADE;

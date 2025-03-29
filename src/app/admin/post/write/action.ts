@@ -4,6 +4,7 @@ import { getServerSession } from "@/lib/auth/server-session";
 import { prisma } from "@/lib/prisma";
 import { Category } from "./model";
 import { z } from "zod";
+import { removeEmojis } from "@/util/string-util";
 
 export async function getCategories(): Promise<Category[]> {
 	const auth = await getServerSession();
@@ -55,7 +56,8 @@ export async function savePost(formData: FormData): Promise<void> {
 		//	})
 		//	.replaceAll("/", "-");
 		//const slug = `${title.trim().toLowerCase().replace(" ", "-")}-${dateString}`;
-		const slug = title.trim().toLowerCase().replace(" ", "-");
+
+		const slug = encodeURIComponent(removeEmojis(title.trim().toLowerCase().replaceAll(" ", "-"))).replace(/-$/, "");
 
 		await prisma.post.create({
 			data: {

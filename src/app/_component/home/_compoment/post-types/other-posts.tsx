@@ -10,7 +10,7 @@ export default async function OtherPosts() {
 	const otherPosts: Post[] = await getOtherPosts();
 
 	if (otherPosts.length === 0) {
-		return <p>No posts were fond.</p>;
+		return <p>No posts were found.</p>;
 	}
 
 	return (
@@ -25,6 +25,7 @@ export default async function OtherPosts() {
 						description={post.description}
 						views={post.views}
 						isPublic={post.isPublic}
+						createdAt={post.createdAt}
 					/>
 				);
 			})}

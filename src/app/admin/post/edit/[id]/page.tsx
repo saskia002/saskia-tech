@@ -2,8 +2,7 @@ import { getServerSession } from "@/lib/auth/server-session";
 import { getCategories, getPost } from "./action";
 import Pagecontent from "./page-content";
 import { notFound } from "next/navigation";
-import { number } from "zod";
-import { Post } from "./model";
+import { Category, Post } from "./model";
 
 export type DynamicPathParams = {
 	id: number;
@@ -30,7 +29,7 @@ export default async function Page({ params }: Readonly<PageParams>) {
 		notFound();
 	}
 
-	const categories = await getCategories();
+	const categories: Category[] = await getCategories();
 
 	return <Pagecontent post={post} categories={categories} />;
 }

@@ -154,7 +154,7 @@ export default function Pagecontent({ categories }: Readonly<PagecontentProps>) 
 
 		return (
 			<main className="w-full h-max inline-flex flex-col items-center">
-				<section className=" w-4/6 max-w-[1000px]">
+				<section className="min-sm:w-4/6 max-w-[1000px] max-sm:w-8/10">
 					<form ref={formRef} className="flex flex-col gap-4" onSubmit={submitAction} onReset={resetAction}>
 						<div className="flex w-full justify-between gap-3 mb-3">
 							<Button variant="ghost" type="reset" disabled={isFormPending}>

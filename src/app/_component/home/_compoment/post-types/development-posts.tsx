@@ -10,7 +10,7 @@ export default async function DevelopmentPosts() {
 	const developmentPosts: Post[] = await getDevelopmentPosts();
 
 	if (developmentPosts.length === 0) {
-		return <p>No posts were fond.</p>;
+		return <p>No posts were found.</p>;
 	}
 
 	return (
@@ -25,6 +25,7 @@ export default async function DevelopmentPosts() {
 						description={post.description}
 						views={post.views}
 						isPublic={post.isPublic}
+						createdAt={post.createdAt}
 					/>
 				);
 			})}

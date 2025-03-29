@@ -4,6 +4,7 @@ import Link from "next/link";
 import { Button } from "@/component/ui/button";
 import { capitalizeFirstLetter } from "@/util/string-util";
 import { getServerSession } from "@/lib/auth/server-session";
+import { fixDateFormat } from "@/util/date-util";
 
 type BlogCardProps = {
 	title: string;
@@ -13,10 +14,13 @@ type BlogCardProps = {
 	category?: string;
 	views: number;
 	isPublic: boolean;
+	createdAt: Date;
 };
 
-export default async function PostCard({ title, created, description, link, category, views, isPublic }: Readonly<BlogCardProps>) {
+export default async function PostCard({ title, created, description, link, category, views, isPublic, createdAt }: Readonly<BlogCardProps>) {
 	const auth = await getServerSession();
+
+	const viewsString = `${views === 0 ? "0 views" : `${views} view${views > 1 ? "s" : ""}`}`;
 
 	return (
 		<Card className="w-full max-w-2xl min-w-[220px]">
@@ -24,8 +28,11 @@ export default async function PostCard({ title, created, description, link, cate
 				<div className="w-full gap-3 flex flex-col">
 					<CardHeader className="flex flex-col w-full pr-2">
 						<CardTitle>{title}</CardTitle>
-						<CardDescription>{category ? `${capitalizeFirstLetter(category)}, ${views} views` : `${views} views`}</CardDescription>
-						{auth && <CardDescription>{isPublic ? "Public" : "Private"}</CardDescription>}
+						<CardDescription className="mt-1">{`${fixDateFormat(createdAt)} EET`}</CardDescription>
+						<CardDescription className="mt-0">
+							{category ? `${capitalizeFirstLetter(category)}, ${viewsString}` : viewsString}
+							{auth && (isPublic ? ", public" : ", private")}
+						</CardDescription>
 					</CardHeader>
 					<CardContent>
 						<p>{description}</p>

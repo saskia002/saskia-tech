@@ -41,12 +41,12 @@ export default async function HomePosts() {
 	return (
 		<div className="max-w-2xl">
 			<Tabs defaultValue="latest">
-				<div className="max-xs:hidden">
+				<div className="max-sm:hidden">
 					<TabsList className="flex w-full max-w-2xl">
 						<TabElements />
 					</TabsList>
 				</div>
-				<div className="min-xs:hidden">
+				<div className="min-sm:hidden">
 					<TabsList className="flex flex-col w-full h-full *:w-full">
 						<TabElements />
 					</TabsList>

@@ -1,0 +1,21 @@
+[Unit]
+Description=Web service
+After=network.target
+
+[Service]
+PIDFile=/srv/web/app.pid
+StandardOutput=journal
+StandardError=journal
+Type=simple
+User=web
+WorkingDirectory=/srv/web
+ExecStart=/usr/bin/npm start
+Restart=always
+RestartSec=5
+StartLimitIntervalSec=60
+StartLimitBurst=3
+Environment=PATH=/usr/bin:/usr/local/bin
+SuccessExitStatus=143
+
+[Install]
+WantedBy=multi-user.target

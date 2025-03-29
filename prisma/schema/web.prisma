@@ -16,7 +16,7 @@ model User {
   isDeleted Boolean  @default(false)
 
   @@map("users")
-  @@schema("saskia-tech")
+  @@schema("web")
 }
 
 // Blog models
@@ -31,7 +31,7 @@ model Category {
   updatedAt DateTime @updatedAt
   isDeleted Boolean  @default(false)
 
-  @@schema("saskia-tech")
+  @@schema("web")
 }
 
 model Post {
@@ -54,7 +54,7 @@ model Post {
 
   isPublic Boolean @default(false)
 
-  @@schema("saskia-tech")
+  @@schema("web")
 }
 
 model Comment {
@@ -68,5 +68,5 @@ model Comment {
   updatedAt   DateTime @updatedAt
   isDeleted   Boolean  @default(false)
 
-  @@schema("saskia-tech")
+  @@schema("web")
 }

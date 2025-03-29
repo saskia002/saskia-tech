@@ -6,6 +6,7 @@ import AdminControl from "./_component/admin-control";
 import { getPost, incrementPostViewCount } from "./action";
 import { notFound } from "next/navigation";
 import { getServerSession } from "@/lib/auth/server-session";
+import { capitalizeFirstLetter } from "@/util/string-util";
 
 export default async function Page({ params }: Readonly<PageParams>) {
 	const auth = await getServerSession();
@@ -20,11 +21,15 @@ export default async function Page({ params }: Readonly<PageParams>) {
 
 	return (
 		<main className="w-full h-max inline-flex flex-col items-center gap-8">
-			<section className="flex flex-col w-4/6 max-w-[1000px]">
+			<section className="min-sm:w-4/6 max-w-[1000px] max-sm:w-8/10">
 				<div className="block w-fit max-w-2xl">
-					<h2 className="text-balance">{post.title}</h2>
+					<h2>{post.title}</h2>
+					{/*<p>{post.description}</p>
+					<p className="mt-1!">{`${fixDateFormat(post.createdAt)} EET`}</p>*/}
 					<p>{`${fixDateFormat(post.createdAt)} EET`}</p>
-					<p className="mt-1!">{`${post.categoryCode}, ${post.views} views`}</p>
+					<p className="mt-1!">{`${capitalizeFirstLetter(post.categoryCode)}, ${
+						post.views === 0 ? "0 views" : `${post.views} view${post.views > 1 ? "s" : ""}`
+					}`}</p>
 					{auth && <p className="mt-1!">{post.isPublic ? "Public" : "Private"}</p>}
 					<AdminControl postId={post.id} isPublic={post.isPublic} />
 					<Separator className="mt-4 mb-6" />

@@ -10,7 +10,7 @@ export default async function LatestPosts() {
 	const LatestPosts: Post[] = await getLatestPosts();
 
 	if (LatestPosts.length === 0) {
-		return <p>No posts were fond.</p>;
+		return <p>No posts were found.</p>;
 	}
 
 	return (
@@ -26,6 +26,7 @@ export default async function LatestPosts() {
 						category={post.categoryCode}
 						views={post.views}
 						isPublic={post.isPublic}
+						createdAt={post.createdAt}
 					/>
 				);
 			})}
