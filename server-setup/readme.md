@@ -83,9 +83,15 @@ NB! Istall all of the requirements before these setps.
 
 -   Other commands:
 
-    ```
+Kill psql processes:
+
     SELECT pg_terminate_backend(pid)
     FROM pg_stat_activity
     WHERE datname = 'web' AND pid <> pg_backend_pid();
 
-    ```
+Generate default key for default_server for NGINX:
+
+    mkdir && sudo openssl req -x509 -nodes -days 36500 -newkey rsa:4096 \
+        -keyout /etc/nginx/ssl/default.key \
+        -out /etc/nginx/ssl/default.crt \
+        -subj "/C=uu/CN=default"
