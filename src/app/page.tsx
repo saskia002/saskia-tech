@@ -3,7 +3,7 @@ import { Github } from "lucide-react";
 import SimpleTooltip from "@/component/ui/custom/simple-tooltip";
 import HomePosts from "@/app/_component/home/home-posts";
 
-export default function Home() {
+export default async function Home() {
 	return (
 		<main className="w-full h-max inline-flex flex-col items-center gap-8 mb-6">
 			<section className="min-sm:w-4/6 max-w-[1000px] max-sm:w-8/10">

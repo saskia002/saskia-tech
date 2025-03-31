@@ -2,14 +2,14 @@
 
 model User {
   //id       String    @id @default(cuid())
-  username String    @id @unique
+  username String        @id @unique
   name     String?
   password String
   //email         String?   @unique
   //emailVerified DateTime? @map("email_verified")
   image    String?
   Post     Post[]
-  Comment  Comment[]
+  Comment  PostComment[]
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -35,38 +35,53 @@ model Category {
 }
 
 model Post {
-  id           Int       @id @default(autoincrement())
-  slug         String    @unique
+  id           Int           @id @default(autoincrement())
+  slug         String        @unique
   title        String
   description  String
   content      String
   img          String?
-  views        Int       @default(0)
+  views        Int           @default(0)
   categoryCode String
-  category     Category  @relation(fields: [categoryCode], references: [code])
+  category     Category      @relation(fields: [categoryCode], references: [code])
   username     String
-  user         User      @relation(fields: [username], references: [username])
-  comments     Comment[]
+  user         User          @relation(fields: [username], references: [username])
+  PostComment  PostComment[]
+  PostView     PostView[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  isDeleted Boolean  @default(false)
+  isPublic  Boolean  @default(false)
+
+  @@schema("web")
+}
+
+model PostView {
+  id           Int    @id @default(autoincrement())
+  ipv6         String @db.VarChar(64)
+  locationInfo Json
+  postId       Int
+  post         Post   @relation(fields: [postId], references: [id])
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
   isDeleted Boolean  @default(false)
 
-  isPublic Boolean @default(false)
-
   @@schema("web")
 }
 
-model Comment {
-  id          Int      @id @default(autoincrement())
+model PostComment {
+  id          Int    @id @default(autoincrement())
   description String
   username    String
-  user        User     @relation(fields: [username], references: [username])
-  postSlug    String
-  post        Post     @relation(fields: [postSlug], references: [slug])
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
-  isDeleted   Boolean  @default(false)
+  user        User   @relation(fields: [username], references: [username])
+  postId      Int
+  post        Post   @relation(fields: [postId], references: [id])
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  isDeleted Boolean  @default(false)
 
   @@schema("web")
 }
