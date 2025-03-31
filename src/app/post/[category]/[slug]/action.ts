@@ -27,7 +27,7 @@ export async function getPost(category: string, slug: string): Promise<Post | nu
 	});
 }
 
-export async function incrementPostViewCount(id: number): Promise<void> {
+export async function incrementPostViewCount(postId: number): Promise<void> {
 	const auth = await getServerSession();
 	if (!auth) {
 		try {
@@ -47,7 +47,7 @@ export async function incrementPostViewCount(id: number): Promise<void> {
 
 			const hasUserViewedPost = await prisma.postView.findFirst({
 				where: {
-					id: id,
+					postId: postId,
 					ipv6: userIpv6,
 				},
 			});
@@ -70,14 +70,14 @@ export async function incrementPostViewCount(id: number): Promise<void> {
 
 				await prisma.postView.create({
 					data: {
-						postId: id,
+						postId: postId,
 						ipv6: userIpv6,
 						locationInfo: locationData ?? {},
 					},
 				});
 
 				await prisma.post.update({
-					where: { id: id, isDeleted: false, isPublic: true },
+					where: { id: postId, isDeleted: false, isPublic: true },
 					data: {
 						views: {
 							increment: 1,

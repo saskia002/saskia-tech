@@ -20,7 +20,7 @@ export default function Error({ error, reset }: Readonly<ErrorBoundaryProps>) {
 			<main className="w-full h-100 flex justify-center">
 				<section className="w-4/6 max-w-[1000px] flex flex-col gap-3">
 					<h2 className="mb-0!">Something went wrong!</h2>
-					<p className="mt-0!">{error.message}</p>
+					<p className="mt-0!">{error.digest}</p>
 					<div className="flex gap-3 mt-1">
 						<Button onClick={() => reset()} variant="outline">
 							Try again
