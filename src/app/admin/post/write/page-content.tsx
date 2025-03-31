@@ -95,7 +95,6 @@ export default function Pagecontent({ categories }: Readonly<PagecontentProps>) 
 						router.push("/");
 					})
 					.catch((error) => {
-						console.log(error);
 						toast.error(`Failed to save post. Please try again.\n${error}`);
 					});
 			});

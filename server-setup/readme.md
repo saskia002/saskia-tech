@@ -91,7 +91,7 @@ Kill psql processes:
 
 Generate default key for default_server for NGINX:
 
-    mkdir && sudo openssl req -x509 -nodes -days 36500 -newkey rsa:4096 \
+    mkdir /etc/nginx/ssl && sudo openssl req -x509 -nodes -days 36500 -newkey rsa:4096 \
         -keyout /etc/nginx/ssl/default.key \
         -out /etc/nginx/ssl/default.crt \
         -subj "/C=uu/CN=default"
