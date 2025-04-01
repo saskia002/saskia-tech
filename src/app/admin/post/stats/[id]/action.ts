@@ -17,7 +17,7 @@ export async function getPostinfoAndStats(postId: number): Promise<PostDataAndSt
 
 	const [post, stats] = await Promise.all([postPromise, statsPromise]);
 
-	if (!post) {
+	if (!post || !stats) {
 		notFound();
 	}
 
