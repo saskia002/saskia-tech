@@ -1,3 +1,5 @@
+import { DeltaStatic } from "react-quill-new";
+
 export type Post = {
 	id: number;
 	createdAt: Date;

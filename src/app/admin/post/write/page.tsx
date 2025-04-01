@@ -5,7 +5,7 @@ import Pagecontent from "./page-content";
 export default async function Page() {
 	const auth = await getServerSession();
 	if (!auth) {
-		throw new Error("You must be logged in to write a blog");
+		throw new Error("You must be logged in order to write a post");
 	}
 
 	const categories = await getCategories();

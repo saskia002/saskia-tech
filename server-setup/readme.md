@@ -22,11 +22,24 @@ NB! Istall all of the requirements before these setps.
         sudo groupadd web
         sudo adduser -G nginx -g web -d /srv/web web --system --shell=/bin/false
         sudo chown -R web:web /srv/web
-        sudo find /srv/web -type d -exec chmod 700 "{}" \;
-        sudo find /srv/web -type f -exec chmod 600 "{}" \;
         ```
 
     - App setup (make sure .env is present in app root as well, look at exaple.env):
+
+        1. DB:
+
+        ```
+        sudo -u postgres psql
+        CREATE DATABASE web;
+        or
+        CREATE ROLE web WITH LOGIN PASSWORD 'securepassword' NOSUPERUSER;
+        CREATE DATABASE web WITH OWNER web ENCODING 'UTF8' LC_COLLATE='et_EE.UTF-8' LC_CTYPE='et_EE.UTF-8' TEMPLATE=template0;
+
+        \c web
+        ALTER SCHEMA public OWNER TO web;
+        ```
+
+        2. App:
 
         ```
         cd /serv/web
@@ -37,6 +50,9 @@ NB! Istall all of the requirements before these setps.
         (sudo) npm run build
         npm run db-migrate-prod
         npm run db-seed
+
+        sudo find /srv/web -type d -exec chmod 700 "{}" \;
+        sudo find /srv/web -type f -exec chmod 600 "{}" \;
         ```
 
     - Generate next auth secret, open git bash on windows or linux bash. Run
@@ -45,7 +61,7 @@ NB! Istall all of the requirements before these setps.
 2. Create system service.
 
     - Copy `web.service` to `/etc/systemd/system`
-        - You could alos create a symlink for the service
+        - You could also create a symlink for the service
     - Reload system service demon and then enable and start serviss:
 
         ```

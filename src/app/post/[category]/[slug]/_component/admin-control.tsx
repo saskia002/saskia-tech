@@ -4,6 +4,7 @@ import { useSession } from "next-auth/react";
 import DeleteAction from "./delete-action";
 import EditAction from "./edit-action";
 import VisibilityAction from "./visibility-action";
+import StatsAction from "./stats-action";
 
 type AdminControlProps = {
 	postId: number;
@@ -19,6 +20,7 @@ export default function AdminControl({ postId, isPublic }: Readonly<AdminControl
 				<DeleteAction postId={postId} />
 				<VisibilityAction postId={postId} isPublic={isPublic} />
 				<EditAction postId={postId} />
+				<StatsAction postId={postId} />
 			</div>
 		);
 	}

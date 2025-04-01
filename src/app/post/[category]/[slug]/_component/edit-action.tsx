@@ -14,5 +14,9 @@ export default function EditAction({ postId }: Readonly<EditActionProps>) {
 		router.push(`/admin/post/edit/${postId}`);
 	};
 
-	return <Button onClick={editPost}>Edit</Button>;
+	return (
+		<Button onClick={editPost} variant="outline">
+			Edit
+		</Button>
+	);
 }

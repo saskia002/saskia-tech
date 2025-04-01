@@ -1,8 +1,8 @@
 import { getServerSession } from "@/lib/auth/server-session";
-import { getCategories, getPost } from "./action";
+import { getPostinfoAndStats } from "./action";
 import Pagecontent from "./page-content";
 import { notFound } from "next/navigation";
-import { Category, Post } from "./model";
+import { PostDataAndStats } from "./model";
 
 export type DynamicPathParams = {
 	id: number;
@@ -15,7 +15,7 @@ type PageParams = {
 export default async function Page({ params }: Readonly<PageParams>) {
 	const auth = await getServerSession();
 	if (!auth) {
-		throw new Error("You must be logged in order to edit a post");
+		throw new Error("You must be logged in to view stats");
 	}
 
 	const paramData: DynamicPathParams = await params;
@@ -24,12 +24,10 @@ export default async function Page({ params }: Readonly<PageParams>) {
 		throw new Error("Invalid id, type is not number");
 	}
 
-	const post: Post | null = await getPost(id);
-	if (!post) {
+	const postDataAndStats: PostDataAndStats = await getPostinfoAndStats(id);
+	if (!postDataAndStats) {
 		notFound();
 	}
 
-	const categories: Category[] = await getCategories();
-
-	return <Pagecontent post={post} categories={categories} />;
+	return <Pagecontent postDataAndStats={postDataAndStats} />;
 }
