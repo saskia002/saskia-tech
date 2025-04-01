@@ -13,6 +13,7 @@ type PagecontentProps = {
 export default function Pagecontent({ postDataAndStats }: Readonly<PagecontentProps>) {
 	const { post, stats } = postDataAndStats;
 
+	console.log(postDataAndStats);
 	return (
 		<main className="w-full h-max inline-flex flex-col items-center">
 			<section className="min-sm:w-4/6 max-w-[1000px] max-sm:w-8/10 flex flex-col gap-6">
@@ -30,27 +31,31 @@ export default function Pagecontent({ postDataAndStats }: Readonly<PagecontentPr
 					<p className="mt-1!">{post.isPublic ? "Public" : "Private"}</p>
 				</div>
 
-				<div className="block w-full max-w-2xl">
-					<Table>
-						<TableHeader>
-							<TableRow>
-								<TableHead>Location</TableHead>
-								<TableHead>Coordinates</TableHead>
-								<TableHead>IP</TableHead>
-								<TableHead>Viewed</TableHead>
-							</TableRow>
-						</TableHeader>
-						<TableBody>
-							{stats.map((stat) => (
-								<TableRow key={stat.ip}>
-									<TableCell>{`${stat.countryCode} - ${stat.country}, ${stat.regionName}, ${stat.city}`}</TableCell>
-									<TableCell>{`${stat.lat}, ${stat.lon}`}</TableCell>
-									<TableCell>{stat.ip}</TableCell>
-									<TableCell>{fixDateFormat(stat.createdAt)}</TableCell>
+				<div className="block w-full">
+					{stats.length > 0 ? (
+						<Table className="table-auto">
+							<TableHeader>
+								<TableRow>
+									<TableHead>Org/Isp</TableHead>
+									<TableHead>IP</TableHead>
+									<TableHead>Viewed</TableHead>
+									<TableHead>Location</TableHead>
 								</TableRow>
-							))}
-						</TableBody>
-					</Table>
+							</TableHeader>
+							<TableBody>
+								{stats.map((stat, index) => (
+									<TableRow key={index + "_" + stat.ip}>
+										<TableCell className="whitespace-normal"> {stat.org ? stat.org : stat.isp} </TableCell>
+										<TableCell className="whitespace-normal">{stat.ip}</TableCell>
+										<TableCell className="whitespace-normal">{fixDateFormat(stat.createdAt)}</TableCell>
+										<TableCell className="whitespace-normal">{`${stat.countryCode}, ${stat.lat}, ${stat.lon} - ${stat.country}, ${stat.regionName}, ${stat.city}`}</TableCell>
+									</TableRow>
+								))}
+							</TableBody>
+						</Table>
+					) : (
+						<p>No stats were found</p>
+					)}
 				</div>
 			</section>
 		</main>

@@ -47,6 +47,7 @@ export type ViewData = {
 	lat: number;
 	lon: number;
 	timezone: string;
+	org: string;
 	isp: string;
 };
 

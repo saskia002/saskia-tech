@@ -111,3 +111,12 @@ Generate default key for default_server for NGINX:
         -keyout /etc/nginx/ssl/default.key \
         -out /etc/nginx/ssl/default.crt \
         -subj "/C=uu/CN=default"
+
+backing up DB:
+
+    sudo -u postgres pg_dump web > /srv/web/db-backup.sql
+    sudo -u postgres psql web < /srv/web/db-backup.sql
+
+     or
+
+    PGPASSWORD="root" pg_dump -U postgres -h localhost -p 5432 -d web -F p -f backup.sql

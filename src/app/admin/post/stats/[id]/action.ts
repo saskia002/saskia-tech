@@ -61,6 +61,9 @@ async function getStats(postId: number): Promise<ViewData[] | undefined> {
 		where: {
 			isDeleted: false,
 			postId: postId,
+			locationInfo: {
+				not: {},
+			},
 		},
 		orderBy: {
 			createdAt: "desc",
@@ -71,31 +74,19 @@ async function getStats(postId: number): Promise<ViewData[] | undefined> {
 		throw new Error("Post not found");
 	}
 
-	return posts
-		.map((post) => {
-			if (!post.locationInfo) {
-				return undefined;
-			}
-			if (typeof post.locationInfo !== "string") {
-				return undefined;
-			}
-
-			const locationInfo = JSON.parse(post.locationInfo) as LocationData;
-			if (!locationInfo) {
-				return undefined;
-			}
-
-			return {
-				country: locationInfo.country,
-				countryCode: locationInfo.countryCode,
-				regionName: locationInfo.regionName,
-				city: locationInfo.city,
-				ip: locationInfo.query,
-				createdAt: post.createdAt,
-				lat: locationInfo.lat,
-				lon: locationInfo.lon,
-				isp: locationInfo.isp,
-			} as ViewData;
-		})
-		.filter((viewData): viewData is ViewData => viewData !== undefined);
+	return posts.map((post) => {
+		const locationInfo = post.locationInfo as LocationData;
+		return {
+			country: locationInfo.country,
+			countryCode: locationInfo.countryCode,
+			regionName: locationInfo.regionName,
+			city: locationInfo.city,
+			ip: locationInfo.query,
+			org: locationInfo.org,
+			createdAt: post.createdAt,
+			lat: locationInfo.lat,
+			lon: locationInfo.lon,
+			isp: locationInfo.isp,
+		} as ViewData;
+	});
 }
