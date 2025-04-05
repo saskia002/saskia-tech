@@ -1,9 +1,9 @@
 import type { Metadata } from "next";
-import { LayoutProps } from "@/app/model/layout";
+import { LayoutProps } from "@/model/layout";
 
 export const metadata: Metadata = {
-	title: "Write a Blog",
-	description: "Write a New Blog",
+	title: "Write a post",
+	description: "Write a new post",
 };
 
 export default async function layout({ children }: Readonly<LayoutProps>) {

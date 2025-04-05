@@ -6,7 +6,7 @@ import AuthProvider from "@/provider/auth-provider";
 import { Toaster } from "@/component/ui/sonner";
 import { pageMetadata } from "@/app/page-metadata";
 import { getServerSession } from "@/lib/auth/server-session";
-import { LayoutProps } from "@/app/model/layout";
+import { LayoutProps } from "@/model/layout";
 
 export const metadata: Metadata = pageMetadata;
 

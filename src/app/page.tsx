@@ -3,9 +3,9 @@ import { Github } from "lucide-react";
 import SimpleTooltip from "@/component/ui/custom/simple-tooltip";
 import HomePosts from "@/app/_component/home/home-posts";
 
-export default async function Home() {
+export default function Home() {
 	return (
-		<main className="w-full h-max inline-flex flex-col items-center gap-8 mb-6">
+		<main className="w-full h-max inline-flex flex-col items-center gap-8 mb-8">
 			<section className="min-sm:w-4/6 max-w-[1000px] max-sm:w-8/10">
 				<h2>Info</h2>
 
@@ -15,7 +15,10 @@ export default async function Home() {
 				<div className="mt-3">
 					<p>
 						This site was written using Next.js, Tailwind CSS, Shadcn, Prisma and{" "}
-						<SimpleTooltip hint={"Pronounced postgres squiil"}>PostgreSQL</SimpleTooltip>.
+						<SimpleTooltip hint="Pronounced postgres squiil" className="cursor-help">
+							PostgreSQL
+						</SimpleTooltip>
+						.
 					</p>
 					<div className="mt-3">
 						<div className="inline-flex">

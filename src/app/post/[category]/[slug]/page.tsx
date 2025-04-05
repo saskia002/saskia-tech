@@ -7,6 +7,7 @@ import { getPost, incrementPostViewCount } from "./action";
 import { notFound } from "next/navigation";
 import { getServerSession } from "@/lib/auth/server-session";
 import { capitalizeFirstLetter } from "@/util/string-util";
+import "prismjs/themes/prism.min.css";
 
 export default async function Page({ params }: Readonly<PageParams>) {
 	const auth = await getServerSession();
@@ -17,24 +18,81 @@ export default async function Page({ params }: Readonly<PageParams>) {
 	}
 	await incrementPostViewCount(post.id);
 
-	const sanitizedContent: string = DOMPurify.sanitize(post.content);
+	const sanitizedContent: string = DOMPurify.sanitize(post.content)
+		.replaceAll(/\u00A0/g, " ")
+		.replaceAll("<p></p>", '<div class="my-4">&nbsp;</div>')
+		.replaceAll("&nbsp;", " ")
+		.replaceAll(/(<pre[^>]*>)([^<]*)(<\/pre>)/g, (match, openingTag, codeContent, closingTag) => {
+			const Prism = require("prismjs");
+			const lines = codeContent.split("\n");
+			if (lines.length === 0) {
+				return match;
+			}
+
+			const language = lines[0].trim().toLowerCase();
+
+			try {
+				require(`prismjs/components/prism-${language}`);
+			} catch (e) {
+				const wrappedCode = lines
+
+					.map((line: string) => {
+						if (line.trim() === "") {
+							return `<code></code>`;
+						}
+
+						if (/<code[^>]*>.*<\/code>/.test(line)) {
+							return line;
+						}
+
+						return `<code>${line}</code>`;
+					})
+
+					.join("\n");
+
+				return `<pre>${wrappedCode}</pre>`;
+			}
+
+			if (lines.length > 2) {
+				lines.shift();
+				lines.pop();
+			}
+
+			const wrappedCode = lines
+				.map((line: string) => {
+					if (line.trim() === "") {
+						return `ϴ___non_breaking_space___ϴ`;
+					}
+
+					return `ϴ___temp___ϴ${line}ϴ___temp_end___ϴ`;
+				})
+				.join("\n");
+
+			const code = Prism.highlight(wrappedCode, Prism.languages[language], language)
+				.replaceAll(/ϴ___temp___ϴ/g, "<code>")
+				.replaceAll(/ϴ___temp_end___ϴ/g, "</code>")
+				.replaceAll(/ϴ___non_breaking_space___ϴ/g, "<code></code>");
+
+			return `${openingTag}${code}${closingTag}`;
+		});
 
 	return (
-		<main className="w-full h-max inline-flex flex-col items-center gap-8">
-			<section className="min-sm:w-4/6 max-w-[1000px] max-sm:w-8/10">
-				<div className="block w-fit max-w-2xl">
-					<h2>{post.title}</h2>
-					{/*<p>{post.description}</p>
-					<p className="mt-1!">{`${fixDateFormat(post.createdAt)} EET`}</p>*/}
-					<p>{`${fixDateFormat(post.createdAt)} EET`}</p>
-					<p className="mt-1!">{`${capitalizeFirstLetter(post.categoryCode)}, ${
-						post.views === 0 ? "0 views" : `${post.views} view${post.views > 1 ? "s" : ""}`
-					}`}</p>
-					{auth && <p className="mt-1!">{post.isPublic ? "Public" : "Private"}</p>}
-					<AdminControl postId={post.id} isPublic={post.isPublic} />
-					<Separator className="mt-4 mb-6" />
+		<main className="w-full h-max inline-flex flex-col items-center gap-8 mb-8">
+			<section className="min-sm:w-4/6 max-sm:w-8/10 max-w-[1000px] w-max">
+				<div className="flex flex-col max-w-3xl w-fit">
+					<div className="block mb-6 ">
+						<h2>{post.title}</h2>
+						<p>{`${fixDateFormat(post.createdAt)} EET`}</p>
+						<p className="mt-2!">{`${capitalizeFirstLetter(post.categoryCode)}, ${
+							post.views === 0 ? "0 views" : `${post.views} view${post.views > 1 ? "s" : ""}`
+						}`}</p>
+						{auth && <p className="mt-2!">{post.isPublic ? "Public" : "Private"}</p>}
+						<AdminControl postId={post.id} isPublic={post.isPublic} />
+						<Separator className="mt-4" />
+					</div>
+
+					<div dangerouslySetInnerHTML={{ __html: sanitizedContent }} />
 				</div>
-				<div dangerouslySetInnerHTML={{ __html: sanitizedContent }} />
 			</section>
 		</main>
 	);

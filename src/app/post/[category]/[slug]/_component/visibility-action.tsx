@@ -6,6 +6,8 @@ import { useState } from "react";
 import { editPostVisibility } from "./action";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
+import { BookKey, BookLock } from "lucide-react";
+import SimpleTooltip from "@/component/ui/custom/simple-tooltip";
 
 type VisibilityActionProps = {
 	postId: number;
@@ -30,9 +32,11 @@ export default function VisibilityAction({ postId, isPublic }: Readonly<Visibili
 
 	return (
 		<Dialog open={isVisibilityActionOpen} onOpenChange={setIsVisibilityActionOpen}>
-			<DialogTrigger asChild>
-				<Button variant="ghost">{isPublic ? "Unpublish" : "Publish"}</Button>
-			</DialogTrigger>
+			<SimpleTooltip hint={isPublic ? "Unpublish post" : "Publish post"} asChild>
+				<DialogTrigger asChild>
+					<Button variant="ghost">{isPublic ? <BookLock /> : <BookKey />}</Button>
+				</DialogTrigger>
+			</SimpleTooltip>
 			<DialogContent className="sm:max-w-[425px]">
 				<DialogHeader>
 					<DialogTitle className="mb-0!">{isPublic ? "Unpublish" : "Publish"} Post</DialogTitle>

@@ -10,6 +10,26 @@ html,
 	scrollbar-gutter: stable;
 }
 
+pre {
+	@apply bg-card py-4 pr-4 pl-12 rounded-md border;
+	counter-reset: line;
+	overflow-wrap: break-word;
+}
+
+pre code {
+	@apply inline relative pl-4 whitespace-pre-wrap break-words;
+	counter-increment: line;
+}
+
+pre code::before {
+	@apply absolute left-[-2.5rem] w-8 text-right text-muted-foreground;
+	content: counter(line);
+}
+
+.token.operator {
+	background: inherit !important;
+}
+
 :root {
 	--radius: 0.625rem;
 	--background: oklch(1 0 0);
@@ -47,6 +67,7 @@ html,
 .dark {
 	/*--background: oklch(0.141 0.005 285.823);*/
 	--background: #141417;
+	/*--background: var(--card);*/
 	/*--foreground: oklch(0.985 0 0);*/
 	--foreground: #f9fafb;
 	--card: oklch(0.21 0.006 285.885);

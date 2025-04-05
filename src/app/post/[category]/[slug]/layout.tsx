@@ -1,4 +1,4 @@
-import { LayoutProps } from "@/app/model/layout";
+import { LayoutProps } from "@/model/layout";
 import { getPost } from "./action";
 import { DynamicPathParams, PageParams, Post } from "./model";
 import { Metadata } from "next";

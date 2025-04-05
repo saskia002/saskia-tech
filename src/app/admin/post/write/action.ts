@@ -57,7 +57,7 @@ export async function savePost(formData: FormData): Promise<void> {
 		//	.replaceAll("/", "-");
 		//const slug = `${title.trim().toLowerCase().replace(" ", "-")}-${dateString}`;
 
-		const slug = encodeURIComponent(removeEmojis(title.trim().toLowerCase().replaceAll(" ", "-"))).replace(/-$/, "");
+		const slug = encodeURIComponent(removeEmojis(title).trim().toLowerCase().replaceAll(" ", "-").replace(/-$/, ""));
 
 		await prisma.post.create({
 			data: {

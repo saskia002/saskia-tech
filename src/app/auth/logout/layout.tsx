@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { LayoutProps } from "@/app/model/layout";
+import { LayoutProps } from "@/model/layout";
 
 export const metadata: Metadata = {
 	title: "Logout",

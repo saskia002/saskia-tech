@@ -3,8 +3,7 @@
 import { fixDateFormat } from "@/util/date-util";
 import { PostDataAndStats } from "./model";
 import { capitalizeFirstLetter } from "@/util/string-util";
-import { Separator } from "@/component/ui/separator";
-import { Table, TableBody, TableCaption, TableCell, TableHead, TableHeader, TableRow } from "@/component/ui/table";
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/component/ui/table";
 
 type PagecontentProps = {
 	postDataAndStats: PostDataAndStats;
@@ -15,20 +14,20 @@ export default function Pagecontent({ postDataAndStats }: Readonly<PagecontentPr
 
 	console.log(postDataAndStats);
 	return (
-		<main className="w-full h-max inline-flex flex-col items-center">
-			<section className="min-sm:w-4/6 max-w-[1000px] max-sm:w-8/10 flex flex-col gap-6">
+		<main className="w-full h-max inline-flex flex-col items-center mb-8">
+			<section className="min-sm:w-4/6 max-w-[1000px] max-sm:w-8/10 flex flex-col gap-3">
 				<div className="block w-fit max-w-2xl">
 					<h2>Stats for the post</h2>
 				</div>
 				<div className="block w-fit max-w-2xl">
 					<h3>{post.title}</h3>
 					<p>{post.description}</p>
-					<p className="mt-1!">{`${fixDateFormat(post.createdAt)} EET`}</p>
+					<p className="mt-2!">{`${fixDateFormat(post.createdAt)} EET`}</p>
 					{/*<p>{`${fixDateFormat(post.createdAt)} EET`}</p>*/}
-					<p className="mt-1!">{`${capitalizeFirstLetter(post.categoryCode)}, ${
+					<p className="mt-2!">{`${capitalizeFirstLetter(post.categoryCode)}, ${
 						post.views === 0 ? "0 views" : `${post.views} view${post.views > 1 ? "s" : ""}`
 					}`}</p>
-					<p className="mt-1!">{post.isPublic ? "Public" : "Private"}</p>
+					<p className="mt-2!">{post.isPublic ? "Public" : "Private"}</p>
 				</div>
 
 				<div className="block w-full">

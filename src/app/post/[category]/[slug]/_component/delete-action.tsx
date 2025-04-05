@@ -6,6 +6,8 @@ import { useState } from "react";
 import { softDeletePost } from "./action";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
+import { Trash2 } from "lucide-react";
+import SimpleTooltip from "@/component/ui/custom/simple-tooltip";
 
 type DeleteActionProps = {
 	postId: number;
@@ -29,9 +31,13 @@ export default function DeleteAction({ postId }: Readonly<DeleteActionProps>) {
 
 	return (
 		<Dialog open={isDeleteActionOpen} onOpenChange={setIsDeleteActionOpen}>
-			<DialogTrigger asChild>
-				<Button variant="ghost">Delete</Button>
-			</DialogTrigger>
+			<SimpleTooltip hint="Delete post" asChild>
+				<DialogTrigger asChild>
+					<Button variant="ghost">
+						<Trash2 />
+					</Button>
+				</DialogTrigger>
+			</SimpleTooltip>
 			<DialogContent className="sm:max-w-[425px]">
 				<DialogHeader>
 					<DialogTitle className="mb-0!">Delete Post</DialogTitle>

@@ -1,16 +1,19 @@
 import { JSX, ReactNode } from "react";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/component/ui/tooltip";
+import { cn } from "@/util/css-class-name-util";
 
 type SimpleTooltipTooltipProps = {
-	children?: ReactNode;
 	hint?: string | ReactNode;
-};
+	asChild?: boolean;
+} & JSX.IntrinsicElements["div"];
 
-export default function SimpleTooltip({ hint, children }: Readonly<SimpleTooltipTooltipProps>) {
+export default function SimpleTooltip({ hint, children, className, asChild = false }: Readonly<SimpleTooltipTooltipProps>) {
 	return (
 		<TooltipProvider>
 			<Tooltip>
-				<TooltipTrigger className="cursor-help">{children}</TooltipTrigger>
+				<TooltipTrigger className={cn(className)} asChild={asChild}>
+					{children}
+				</TooltipTrigger>
 				<TooltipContent>
 					<div>{hint}</div>
 				</TooltipContent>

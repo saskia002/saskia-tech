@@ -16,11 +16,15 @@ export default function AdminControl({ postId, isPublic }: Readonly<AdminControl
 
 	if (status === "authenticated") {
 		return (
-			<div className="mt-3 flex gap-3 justify-end">
-				<DeleteAction postId={postId} />
-				<VisibilityAction postId={postId} isPublic={isPublic} />
-				<EditAction postId={postId} />
-				<StatsAction postId={postId} />
+			<div className="mt-3 flex gap-3 justify-between items-center flex-wrap">
+				<div className="flex gap-3">
+					<DeleteAction postId={postId} />
+					<VisibilityAction postId={postId} isPublic={isPublic} />
+				</div>
+				<div className="flex gap-3">
+					<EditAction postId={postId} />
+					<StatsAction postId={postId} />
+				</div>
 			</div>
 		);
 	}

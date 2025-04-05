@@ -173,7 +173,7 @@ export default function Pagecontent({ post, categories }: Readonly<PagecontentPr
 		}, []);
 
 		return (
-			<main className="w-full h-max inline-flex flex-col items-center">
+			<main className="w-full h-max inline-flex flex-col items-center mb-8">
 				<section className="min-sm:w-4/6 max-w-[1000px] max-sm:w-8/10">
 					<form ref={formRef} className="flex flex-col gap-4" onSubmit={submitAction}>
 						<div className="flex w-full justify-between gap-3 mb-3 flex-wrap">
