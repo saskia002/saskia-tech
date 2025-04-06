@@ -1,9 +1,7 @@
-import { Metadata } from "next";
-
 export default function Page() {
 	return (
-		<main className="w-full h-100 inline-flex flex-col items-center gap-8">
-			<section className="w-4/6 max-w-[1000px]">
+		<main className="w-full h-max inline-flex flex-col items-center mb-8">
+			<section className="min-md:w-4/6 max-w-[1000px] max-md:w-8/10">
 				<h2>Minecraft server</h2>
 				<p>
 					You can join my 1.21.4 MC server using this link: <u>saskia.tech</u>

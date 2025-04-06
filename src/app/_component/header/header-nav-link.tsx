@@ -7,19 +7,28 @@ type HeaderNavLinkProps = {
 	href: string;
 	replace?: boolean;
 	prefetch?: boolean;
-	tooltipEnabled?: boolean;
+	tooltip?: boolean;
 	tooltipText?: string;
 	children: ReactNode;
+	ariaLabel?: string;
 };
 
-export default function HeaderNavLink({ href, replace = false, prefetch = true, tooltipEnabled = false, tooltipText, children }: Readonly<HeaderNavLinkProps>) {
-	if (tooltipEnabled) {
+export default function HeaderNavLink({
+	href,
+	replace = false,
+	prefetch = true,
+	tooltip = false,
+	tooltipText,
+	children,
+	ariaLabel,
+}: Readonly<HeaderNavLinkProps>) {
+	if (tooltip) {
 		return (
 			<TooltipProvider>
 				<Tooltip>
 					<TooltipTrigger asChild>
 						<Button variant="link" asChild className="px-0 py-0 has-[>svg]:px-0">
-							<Link href={href} replace={replace} prefetch={prefetch}>
+							<Link href={href} replace={replace} prefetch={prefetch} aria-label={ariaLabel}>
 								{children}
 							</Link>
 						</Button>
@@ -40,7 +49,7 @@ export default function HeaderNavLink({ href, replace = false, prefetch = true, 
 	}
 	return (
 		<Button variant="link" asChild className="px-0 py-0 has-[>svg]:px-0">
-			<Link href={href} replace={replace} prefetch={prefetch}>
+			<Link href={href} replace={replace} prefetch={prefetch} aria-label={ariaLabel}>
 				{children}
 			</Link>
 		</Button>

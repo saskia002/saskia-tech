@@ -18,8 +18,8 @@ export default function StatsAction({ postId }: Readonly<StatsActionProps>) {
 
 	return (
 		<SimpleTooltip hint="View post stats" asChild>
-			<Button onClick={viewPostStats}>
-				<TrendingUp />
+			<Button onClick={viewPostStats} aria-label="View post stats">
+				<TrendingUp aria-hidden />
 			</Button>
 		</SimpleTooltip>
 	);

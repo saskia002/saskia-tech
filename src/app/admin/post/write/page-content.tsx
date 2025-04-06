@@ -13,6 +13,8 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Category, LocalStoragePostData } from "./model";
 import { savePost } from "./action";
 import { Textarea } from "@/component/ui/textarea";
+import SimpleTooltip from "@/component/ui/custom/simple-tooltip";
+import { Trash2 } from "lucide-react";
 
 type PagecontentProps = {
 	categories: Category[];
@@ -152,13 +154,16 @@ export default function Pagecontent({ categories }: Readonly<PagecontentProps>) 
 		}, []);
 
 		return (
-			<main className="w-full h-full inline-flex flex-col items-center mb-8 ">
-				<section className="min-sm:w-4/6 max-w-[1000px] max-sm:w-8/10">
+			<main className="w-full h-max inline-flex flex-col items-center mb-8">
+				<section className="min-md:w-4/6 max-w-[1000px] max-md:w-8/10">
 					<form ref={formRef} className="flex flex-col gap-4" onSubmit={submitAction} onReset={resetAction}>
 						<div className="flex w-full justify-between gap-3 mb-3">
-							<Button variant="ghost" type="reset" disabled={isFormPending}>
-								Clear cache
-							</Button>
+							<SimpleTooltip hint="Clear cache" asChild>
+								<Button variant="ghost" type="reset" disabled={isFormPending}>
+									<Trash2 />
+								</Button>
+							</SimpleTooltip>
+
 							<Button type="submit" disabled={isFormPending}>
 								Post
 							</Button>

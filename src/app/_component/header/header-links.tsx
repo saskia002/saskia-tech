@@ -9,19 +9,19 @@ export default function HeaderLinks() {
 
 	return (
 		<div className="flex gap-4">
-			<HeaderNavLink href="/minecraft" tooltipEnabled>
-				<Pickaxe />
+			<HeaderNavLink href="/minecraft" tooltip ariaLabel="Minecraft">
+				<Pickaxe aria-hidden />
 			</HeaderNavLink>
 			{status === "authenticated" ? (
 				<>
 					<HeaderNavLink href="/admin/post/write">Write a Blog</HeaderNavLink>
-					<HeaderNavLink href="/auth/logout" tooltipEnabled tooltipText="Logout">
-						<LogOut />
+					<HeaderNavLink href="/auth/logout" tooltip tooltipText="Logout" ariaLabel="Logout">
+						<LogOut aria-hidden />
 					</HeaderNavLink>
 				</>
 			) : (
-				<HeaderNavLink href="/auth/login" tooltipEnabled tooltipText="Login">
-					<LogIn />
+				<HeaderNavLink href="/auth/login" tooltip tooltipText="Login" ariaLabel="Logout">
+					<LogIn aria-hidden />
 				</HeaderNavLink>
 			)}
 		</div>

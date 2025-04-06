@@ -78,22 +78,26 @@ export default async function Page({ params }: Readonly<PageParams>) {
 
 	return (
 		<main className="w-full h-max inline-flex flex-col items-center gap-8 mb-8">
-			<section className="min-sm:w-4/6 max-sm:w-8/10 max-w-[1000px] w-max">
+			<article className="min-md:w-4/6 max-w-[1000px] max-md:w-8/10">
 				<div className="flex flex-col max-w-3xl w-fit">
-					<div className="block mb-6 ">
+					<header className="block mb-6 ">
+						{/*<hgroup>*/}
 						<h2>{post.title}</h2>
-						<p>{`${fixDateFormat(post.createdAt)} EET`}</p>
+						{/*</hgroup>*/}
+						<p>
+							<time dateTime={post.createdAt.toString()}>{`${fixDateFormat(post.createdAt)} EET`}</time>
+						</p>
 						<p className="mt-2!">{`${capitalizeFirstLetter(post.categoryCode)}, ${
 							post.views === 0 ? "0 views" : `${post.views} view${post.views > 1 ? "s" : ""}`
 						}`}</p>
 						{auth && <p className="mt-2!">{post.isPublic ? "Public" : "Private"}</p>}
 						<AdminControl postId={post.id} isPublic={post.isPublic} />
 						<Separator className="mt-4" />
-					</div>
+					</header>
 
-					<div dangerouslySetInnerHTML={{ __html: sanitizedContent }} />
+					<section dangerouslySetInnerHTML={{ __html: sanitizedContent }} />
 				</div>
-			</section>
+			</article>
 		</main>
 	);
 }

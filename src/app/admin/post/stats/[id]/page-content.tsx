@@ -15,7 +15,7 @@ export default function Pagecontent({ postDataAndStats }: Readonly<PagecontentPr
 	console.log(postDataAndStats);
 	return (
 		<main className="w-full h-max inline-flex flex-col items-center mb-8">
-			<section className="min-sm:w-4/6 max-w-[1000px] max-sm:w-8/10 flex flex-col gap-3">
+			<section className="min-md:w-4/6 max-w-[1000px] max-md:w-8/10 gap-3">
 				<div className="block w-fit max-w-2xl">
 					<h2>Stats for the post</h2>
 				</div>
@@ -53,7 +53,9 @@ export default function Pagecontent({ postDataAndStats }: Readonly<PagecontentPr
 							</TableBody>
 						</Table>
 					) : (
-						<p>No stats were found</p>
+						<p className="pt-3">
+							<b>No stats were found.</b>
+						</p>
 					)}
 				</div>
 			</section>

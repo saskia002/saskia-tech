@@ -18,8 +18,8 @@ export default function EditAction({ postId }: Readonly<EditActionProps>) {
 
 	return (
 		<SimpleTooltip hint="Edit post" asChild>
-			<Button onClick={editPost} variant="outline">
-				<NotebookPen />
+			<Button onClick={editPost} variant="outline" aria-label="Edit post">
+				<NotebookPen aria-hidden />
 			</Button>
 		</SimpleTooltip>
 	);

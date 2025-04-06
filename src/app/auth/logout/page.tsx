@@ -36,21 +36,19 @@ export default function Page() {
 	}
 
 	return (
-		<main className="w-full h-max flex flex-col items-center my-5">
-			<section className="flex flex-col mt-5 w-full max-w-xs ">
-				<div>
-					<Card>
-						<CardHeader>
-							<CardTitle className="text-2xl">Logout</CardTitle>
-							<CardDescription>Are you sure you want to log out?</CardDescription>
-						</CardHeader>
-						<CardContent>
-							<Button onClick={() => handleAuth()} className="w-full text-wrap whitespace-break-spaces h-max">
-								Yes
-							</Button>
-						</CardContent>
-					</Card>
-				</div>
+		<main className="w-full h-max inline-flex flex-col items-center mb-8">
+			<section className="flex flex-col min-md:w-4/6 max-md:w-8/10 max-w-sm">
+				<Card>
+					<CardHeader>
+						<CardTitle className="text-2xl">Logout</CardTitle>
+						<CardDescription>Are you sure you want to log out?</CardDescription>
+					</CardHeader>
+					<CardContent>
+						<Button onClick={() => handleAuth()} className="w-full text-wrap whitespace-break-spaces h-max">
+							Yes
+						</Button>
+					</CardContent>
+				</Card>
 			</section>
 		</main>
 	);

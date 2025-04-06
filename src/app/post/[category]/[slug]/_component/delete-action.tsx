@@ -33,8 +33,8 @@ export default function DeleteAction({ postId }: Readonly<DeleteActionProps>) {
 		<Dialog open={isDeleteActionOpen} onOpenChange={setIsDeleteActionOpen}>
 			<SimpleTooltip hint="Delete post" asChild>
 				<DialogTrigger asChild>
-					<Button variant="ghost">
-						<Trash2 />
+					<Button variant="ghost" aria-label="Delete post">
+						<Trash2 aria-hidden />
 					</Button>
 				</DialogTrigger>
 			</SimpleTooltip>

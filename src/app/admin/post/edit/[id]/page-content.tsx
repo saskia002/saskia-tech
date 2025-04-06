@@ -14,6 +14,8 @@ import { Button } from "@/component/ui/button";
 import { Input } from "@/component/ui/input";
 import { Textarea } from "@/component/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/component/ui/select";
+import { RefreshCcw, Trash2 } from "lucide-react";
+import SimpleTooltip from "@/component/ui/custom/simple-tooltip";
 
 type PagecontentProps = {
 	post: Post;
@@ -174,16 +176,21 @@ export default function Pagecontent({ post, categories }: Readonly<PagecontentPr
 
 		return (
 			<main className="w-full h-max inline-flex flex-col items-center mb-8">
-				<section className="min-sm:w-4/6 max-w-[1000px] max-sm:w-8/10">
+				<section className="min-md:w-4/6 max-w-[1000px] max-md:w-8/10">
 					<form ref={formRef} className="flex flex-col gap-4" onSubmit={submitAction}>
 						<div className="flex w-full justify-between gap-3 mb-3 flex-wrap">
 							<div className="flex gap-3 flex-wrap">
-								<Button variant="ghost" onClick={(e) => clearCache(e)} disabled={isFormPending}>
-									Clear cache
-								</Button>
-								<Button variant="ghost" onClick={(e) => loadFromCache(e)} disabled={isFormPending}>
-									Load cache
-								</Button>
+								<SimpleTooltip hint="Clear cache" asChild>
+									<Button variant="ghost" type="reset" onClick={(e) => clearCache(e)} disabled={isFormPending}>
+										<Trash2 />
+									</Button>
+								</SimpleTooltip>
+
+								<SimpleTooltip hint="Load cache" asChild>
+									<Button variant="ghost" type="reset" onClick={(e) => loadFromCache(e)} disabled={isFormPending}>
+										<RefreshCcw />
+									</Button>
+								</SimpleTooltip>
 							</div>
 							<Button type="submit" disabled={isFormPending}>
 								Update

@@ -34,7 +34,9 @@ export default function VisibilityAction({ postId, isPublic }: Readonly<Visibili
 		<Dialog open={isVisibilityActionOpen} onOpenChange={setIsVisibilityActionOpen}>
 			<SimpleTooltip hint={isPublic ? "Unpublish post" : "Publish post"} asChild>
 				<DialogTrigger asChild>
-					<Button variant="ghost">{isPublic ? <BookLock /> : <BookKey />}</Button>
+					<Button variant="ghost" aria-label={`${isPublic ? "Unpublish" : "Publish"} Post`}>
+						{isPublic ? <BookLock aria-hidden /> : <BookKey aria-hidden />}
+					</Button>
 				</DialogTrigger>
 			</SimpleTooltip>
 			<DialogContent className="sm:max-w-[425px]">

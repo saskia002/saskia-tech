@@ -6,7 +6,7 @@ import HomePosts from "@/app/_component/home/home-posts";
 export default function Home() {
 	return (
 		<main className="w-full h-max inline-flex flex-col items-center gap-8 mb-8">
-			<section className="min-sm:w-4/6 max-w-[1000px] max-sm:w-8/10">
+			<section className="min-md:w-4/6 max-w-[1000px] max-md:w-8/10">
 				<h2>Info</h2>
 
 				<p>Hello! My name is Saskia Kriibi. I work as a software engineer.</p>
@@ -31,7 +31,7 @@ export default function Home() {
 					</div>
 				</div>
 			</section>
-			<section className="min-sm:w-4/6 max-w-[1000px] max-sm:w-8/10">
+			<section className="min-md:w-4/6 max-w-[1000px] max-md:w-8/10">
 				<h2 className="mb-5" tabIndex={-1}>
 					Posts
 				</h2>
