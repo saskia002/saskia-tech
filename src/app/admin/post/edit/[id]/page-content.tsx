@@ -86,6 +86,19 @@ export default function Pagecontent({ post, categories }: Readonly<PagecontentPr
 		},
 	};
 
+	const getLocalStoragePostData = (): LocalStoragePostData | undefined => {
+		const data = localStorage.getItem("ADMIN_POST_EDITOR_DATA");
+		console.log(data);
+		return data ? JSON.parse(data) : undefined;
+	};
+
+	const clearCache = (e: React.MouseEvent<HTMLButtonElement>) => {
+		localStorage.setItem("ADMIN_POST_EDITOR_DATA", JSON.stringify({}));
+		localStorage.removeItem("ADMIN_POST_EDITOR_DATA");
+
+		console.log(localStorage.getItem("ADMIN_POST_EDITOR_DATA"));
+	};
+
 	if (ReactQuill && typeof typeof window !== "undefined") {
 		const submitAction = async (e: React.FormEvent<HTMLFormElement>) => {
 			e.preventDefault();
@@ -104,8 +117,6 @@ export default function Pagecontent({ post, categories }: Readonly<PagecontentPr
 			});
 		};
 
-		// Restore Editor state on load
-		// TODO: fix category dropdown not setting value correctly
 		useEffect(() => {
 			const form = formRef?.current;
 
@@ -113,28 +124,16 @@ export default function Pagecontent({ post, categories }: Readonly<PagecontentPr
 				const title = form.querySelector('[name="title"]') as HTMLInputElement;
 				const description = form.querySelector('[name="description"]') as HTMLInputElement;
 				const category = form.querySelector('[name="category"]') as HTMLInputElement;
-				const jsonData = getLocalStoragePostData();
 
-				if (jsonData) {
-					title.value = post.title;
-					description.value = post.description;
-					category.value = post.categoryCode;
-					setQuillInitData(post.content ?? "");
-				}
+				title.value = post.title;
+				description.value = post.description;
+				category.value = post.categoryCode;
+				setQuillInitData(post.content ?? "");
 			}
 		}, []);
 
-		const getLocalStoragePostData = (): LocalStoragePostData | undefined => {
-			const data = localStorage.getItem("ADMIN_POST_EDITOR_DATA");
-			return data ? JSON.parse(data) : undefined;
-		};
-
-		const clearCache = (e: React.MouseEvent<HTMLButtonElement>) => {
-			e.preventDefault();
-			localStorage.removeItem("ADMIN_POST_EDITOR_DATA");
-			location.reload();
-		};
-
+		// Restore Editor state on load
+		// TODO: fix category dropdown not setting value correctly
 		const loadFromCache = (e: React.MouseEvent<HTMLButtonElement>) => {
 			e.preventDefault();
 			const form = formRef?.current;

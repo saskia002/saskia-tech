@@ -13,16 +13,15 @@ import "prismjs/themes/prism.min.css";
 function getUndefinedCodeBlock(lines: string[]): string {
 	return lines
 		.map((line: string) => {
-			const trimmedLine: string = line.trim();
-			if (trimmedLine === "") {
+			if (line.trim() === "") {
 				return `<code></code>`;
 			}
 
 			if (/<code[^>]*>.*<\/code>/.test(line)) {
-				return trimmedLine;
+				return line;
 			}
 
-			return `<code>${trimmedLine}</code>`;
+			return `<code>${line}</code>`;
 		})
 		.join("\n");
 }
@@ -42,13 +41,11 @@ function getCodeBlockByLanguage(language: string, lines: string[], openingTag: s
 
 	const wrappedCode = lines
 		.map((line: string) => {
-			const trimmedLine: string = line.trim();
-
-			if (trimmedLine === "") {
+			if (line.trim() === "") {
 				return `ϴ___empty_line___ϴ`;
 			}
 
-			return `ϴ___temp_code_block___ϴ${trimmedLine}ϴ___temp_code_block_end___ϴ`;
+			return `ϴ___temp_code_block___ϴ${line}ϴ___temp_code_block_end___ϴ`;
 		})
 		.join("\n");
 
@@ -73,7 +70,7 @@ export default async function Page({ params }: Readonly<PageParams>) {
 		.replaceAll(/\u00A0/g, " ")
 		.replaceAll("&nbsp;", " ")
 		.replaceAll("<p></p>", '<div class="my-4"></div>')
-		.replaceAll(/```([^`]*)```|``([^`]*)``|``([^`]*)``/g, (_match, tripleContent, doubleContent, singleContent) => {
+		.replaceAll(/```([^`]*)```|``([^`]*)``|`([^`]*)`/g, (_match, tripleContent, doubleContent, singleContent) => {
 			const codeContent: string = (tripleContent || doubleContent || singleContent || "").trim().replaceAll(/<p>/g, "").replaceAll(/<\/p>/g, "\n");
 			const trimmedLine: string = codeContent.trim();
 
