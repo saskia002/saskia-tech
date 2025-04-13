@@ -69,7 +69,7 @@ export default async function Page({ params }: Readonly<PageParams>) {
 	const sanitizedContent: string = DOMPurify.sanitize(post.content)
 		.replaceAll(/\u00A0/g, " ")
 		.replaceAll("&nbsp;", " ")
-		.replaceAll("<p></p>", '<div class="my-4"></div>')
+		.replaceAll("<p></p>", '<div class="my-3 leading-0">&nbsp;</div>')
 		.replaceAll(/```([^`]*)```|``([^`]*)``|`([^`]*)`/g, (_match, tripleContent, doubleContent, singleContent) => {
 			const codeContent: string = (tripleContent || doubleContent || singleContent || "").trim().replaceAll(/<p>/g, "").replaceAll(/<\/p>/g, "\n");
 			const trimmedLine: string = codeContent.trim();

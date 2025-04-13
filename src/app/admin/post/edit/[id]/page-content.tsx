@@ -107,7 +107,7 @@ export default function Pagecontent({ post, categories }: Readonly<PagecontentPr
 
 			startTransition(async () => {
 				await updatePost(post.id, formData)
-					.then(() => {
+					.then((post) => {
 						toast.success("Post saved successfully!");
 						router.push(`/post/${post.categoryCode}/${post.slug}`);
 					})

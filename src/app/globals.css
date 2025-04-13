@@ -27,7 +27,7 @@ pre code::before {
 
 /* MD `` `` or ` ` code blocks */
 md {
-	@apply bg-zinc-200/50 pb-2 pt-1.5 px-2 rounded-sm w-fit h-fit inline-flex align-middle leading-3 font-mono;
+	@apply bg-zinc-200/50 pb-2 pt-1.5 px-1.5 rounded-sm w-fit h-fit inline-flex align-middle leading-3 font-mono;
 	@apply dark:bg-card dark:border;
 }
 
@@ -170,6 +170,10 @@ h2 {
 
 h3 {
 	@apply scroll-m-20 mb-3 text-2xl font-semibold tracking-tight;
+}
+
+h4 {
+	@apply scroll-m-20 text-xl font-semibold tracking-tight;
 }
 
 p {
