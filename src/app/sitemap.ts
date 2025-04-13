@@ -24,29 +24,34 @@ function getPostPath(post: SitemapPost): string {
 }
 
 async function getPostSitemapData(): Promise<BaseSitemapData[]> {
-	const posts: SitemapPost[] = await prisma.post.findMany({
-		where: {
-			isDeleted: false,
-			isPublic: true,
-		},
-		orderBy: {
-			updatedAt: "desc",
-		},
-		select: {
-			categoryCode: true,
-			slug: true,
-			updatedAt: true,
-		},
-	});
+	try {
+		const posts: SitemapPost[] = await prisma.post.findMany({
+			where: {
+				isDeleted: false,
+				isPublic: true,
+			},
+			orderBy: {
+				updatedAt: "desc",
+			},
+			select: {
+				categoryCode: true,
+				slug: true,
+				updatedAt: true,
+			},
+		});
 
-	return posts.map((post) => {
-		return {
-			path: getPostPath(post),
-			lastModified: new Date(post.updatedAt).toISOString(),
-			changeFrequency: "weekly",
-			priority: 0.7,
-		};
-	});
+		return posts.map((post) => {
+			return {
+				path: getPostPath(post),
+				lastModified: new Date(post.updatedAt).toISOString(),
+				changeFrequency: "weekly",
+				priority: 0.7,
+			};
+		});
+	} catch (error) {
+		console.error(error);
+		redirect("/not-found");
+	}
 }
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
@@ -62,35 +67,30 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 		}
 	}
 
-	try {
-		const postPages: BaseSitemapData[] = await getPostSitemapData();
-		const staticPages: BaseSitemapData[] = [
-			{
-				path: "/",
-				lastModified: new Date().toISOString(),
-				changeFrequency: "weekly",
-				priority: 1,
-			},
-			{
-				path: "/minecraft",
-				lastModified: new Date("2025-04-01").toISOString(),
-				changeFrequency: "monthly",
-				priority: 0.1,
-			},
-		];
+	const postPages: BaseSitemapData[] = await getPostSitemapData();
+	const staticPages: BaseSitemapData[] = [
+		{
+			path: "/",
+			lastModified: new Date().toISOString(),
+			changeFrequency: "weekly",
+			priority: 1,
+		},
+		{
+			path: "/minecraft",
+			lastModified: new Date("2025-04-01").toISOString(),
+			changeFrequency: "monthly",
+			priority: 0.1,
+		},
+	];
 
-		const allPages: BaseSitemapData[] = [...staticPages, ...postPages];
+	const allPages: BaseSitemapData[] = [...staticPages, ...postPages];
 
-		return allPages.map((page) => {
-			return {
-				url: `https://${domain}${page.path}`,
-				lastModified: page.lastModified,
-				changeFrequency: page.changeFrequency,
-				priority: page.priority,
-			};
-		});
-	} catch (error) {
-		console.error(error);
-		redirect("/not-found");
-	}
+	return allPages.map((page) => {
+		return {
+			url: `https://${domain}${page.path}`,
+			lastModified: page.lastModified,
+			changeFrequency: page.changeFrequency,
+			priority: page.priority,
+		};
+	});
 }
