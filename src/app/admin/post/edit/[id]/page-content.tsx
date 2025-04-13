@@ -14,7 +14,7 @@ import { Button } from "@/component/ui/button";
 import { Input } from "@/component/ui/input";
 import { Textarea } from "@/component/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/component/ui/select";
-import { RefreshCcw, Trash2 } from "lucide-react";
+import { HardDriveDownload, RefreshCcw, Trash2 } from "lucide-react";
 import SimpleTooltip from "@/component/ui/custom/simple-tooltip";
 
 type PagecontentProps = {
@@ -96,7 +96,7 @@ export default function Pagecontent({ post, categories }: Readonly<PagecontentPr
 				await updatePost(post.id, formData)
 					.then(() => {
 						toast.success("Post saved successfully!");
-						router.push("/");
+						router.push(`/post/${post.categoryCode}/${post.slug}`);
 					})
 					.catch((error) => {
 						toast.error(`Failed to save post. Please try again.\n${error}`);
@@ -150,8 +150,14 @@ export default function Pagecontent({ post, categories }: Readonly<PagecontentPr
 					description.value = jsonData.description;
 					category.value = jsonData.category;
 					setQuillInitData(jsonData.content ?? "");
+					quillRef.current?.getEditor().setContents(jsonData.content as any);
 				}
 			}
+		};
+
+		const reloadFromDb = (e: React.MouseEvent<HTMLButtonElement>) => {
+			e.preventDefault();
+			location.reload();
 		};
 
 		// Autosave editor after each 10 seconds
@@ -188,13 +194,20 @@ export default function Pagecontent({ post, categories }: Readonly<PagecontentPr
 
 								<SimpleTooltip hint="Load cache" asChild>
 									<Button variant="ghost" type="reset" onClick={(e) => loadFromCache(e)} disabled={isFormPending}>
-										<RefreshCcw />
+										<HardDriveDownload />
 									</Button>
 								</SimpleTooltip>
 							</div>
-							<Button type="submit" disabled={isFormPending}>
-								Update
-							</Button>
+							<div className="flex gap-3 flex-wrap">
+								<SimpleTooltip hint="Reload data" asChild>
+									<Button variant="ghost" type="reset" onClick={(e) => reloadFromDb(e)} disabled={isFormPending}>
+										<RefreshCcw />
+									</Button>
+								</SimpleTooltip>
+								<Button type="submit" disabled={isFormPending}>
+									Update
+								</Button>
+							</div>
 						</div>
 						<div className="block w-fit max-w-2xl mb-4">
 							<p>{`${fixDateFormat(post.createdAt)} EET`}</p>

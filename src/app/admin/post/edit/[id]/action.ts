@@ -87,5 +87,5 @@ export async function updatePost(id: number, formData: FormData): Promise<void> 
 		return;
 	}
 
-	throw new Error("Somethign went wrong");
+	throw new Error("Something went wrong");
 }

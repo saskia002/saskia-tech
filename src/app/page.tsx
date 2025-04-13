@@ -12,23 +12,21 @@ export default function Home() {
 				<p>Hello! My name is Saskia Kriibi. I work as a software engineer.</p>
 				<p>My goal is to write a new dev blog every Friday about what I've learnt during the week.</p>
 
-				<div className="mt-3">
-					<p>
-						This site was written using Next.js, Tailwind CSS, Shadcn, Prisma and{" "}
+				<div className="flex mt-4 h-min gap-2">
+					<p className="leading-none! h-min mt-3">
+						This site was written using Next.js, Tailwind, Shadcn, Prisma and{" "}
 						<SimpleTooltip hint="Pronounced postgres squiil" className="cursor-help">
 							PostgreSQL
 						</SimpleTooltip>
 						.
 					</p>
-					<div className="mt-3">
-						<div className="inline-flex">
-							<Button variant="ghost" className="w-full text-wrap whitespace-break-spaces h-max flex flex-row" asChild>
-								<a href="https://github.com/saskia002/saskia-tech" target="_blank">
-									<Github /> The code for this website can be found on here
-								</a>
-							</Button>
-						</div>
-					</div>
+					<SimpleTooltip hint="The code for this website can be found on here" asChild>
+						<Button variant="ghost" asChild className="py-1! px-2! h-min w-min">
+							<a href="https://github.com/saskia002/saskia-tech" target="_blank">
+								<Github />
+							</a>
+						</Button>
+					</SimpleTooltip>
 				</div>
 			</section>
 			<section className="min-md:w-4/6 max-w-[1000px] max-md:w-8/10">

@@ -70,7 +70,7 @@ export default function Page() {
 
 	return (
 		<main className="w-full h-max inline-flex flex-col items-center mb-8">
-			<section className=" flex flex-colmin-md:w-4/6 max-md:w-8/10 max-w-sm">
+			<section className="flex flex-col min-md:w-4/6 max-md:w-8/10 max-w-sm">
 				<Card>
 					<CardHeader>
 						<CardTitle className="text-2xl">Login</CardTitle>

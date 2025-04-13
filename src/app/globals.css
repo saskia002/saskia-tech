@@ -4,13 +4,12 @@
 @custom-variant dark (&:is(.dark *));
 
 body,
-html,
-:root {
-	@apply m-0 p-0 w-full h-full max-h-full max-w-full;
+html {
+	@apply m-0 p-0 w-full h-max max-h-full max-w-full;
 	scrollbar-gutter: stable;
 }
 
-pre {
+pre:has(> code) {
 	@apply bg-card py-4 pr-4 pl-12 rounded-md border;
 	counter-reset: line;
 	overflow-wrap: break-word;
@@ -26,7 +25,18 @@ pre code::before {
 	content: counter(line);
 }
 
-.token.operator {
+/* MD `` `` or ` ` code blocks */
+md {
+	@apply bg-zinc-200/50 pb-2 pt-1.5 px-2 rounded-sm w-fit h-fit inline-flex align-middle leading-3 font-mono;
+	@apply dark:bg-card dark:border;
+}
+
+/* MD ``` ``` code blocks */
+pre:has(> md) > md {
+	@apply leading-6 py-2 px-3;
+}
+
+.token {
 	background: inherit !important;
 }
 
