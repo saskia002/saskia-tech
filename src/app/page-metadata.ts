@@ -6,31 +6,49 @@ export const pageMetadata: Metadata = {
 		template: "Saskia - %s",
 		default: "Saskia - Homepage",
 	},
-	description: "Saskia Portfolio and a blog about coding, and other things I find interesting.",
+	description: "Portfolio and a blog. I post about coding, IT and other things I find interesting.",
 	keywords: [
 		"Saskia",
 		"saskia",
 		"Kriibi",
 		"Saskia Kriibi",
-		"Epic Gamer",
 		"IT",
+		"Dev",
+		"Development",
+		"Code",
 		"Coding",
 		"Estonia",
 		"Eesti",
-		"Banking",
-		"Bank",
-		"Pank",
 		"Portfolio",
 		"Portfoolio",
-		"gloobus",
+		"Blog",
+		"Blogi",
+		"Post",
+		"Postitus",
+		"saskia tech",
+		"saskia002",
 	],
 	authors: [
 		{
+			name: "Saskia",
+		},
+		{
+			name: "Saskia Kriibi",
+		},
+		{
 			url: "https://saskia.tech",
 			name: "Saskia Kriibi",
 		},
 		{
 			url: "https://saskia.tech",
+			name: "Saskia",
+		},
+		{
+			url: "https://saskia002.ee/",
+			name: "Saskia Kriibi",
+		},
+		{
+			url: "https://saskia002.ee/",
 			name: "Saskia",
 		},
 		{
@@ -41,7 +59,10 @@ export const pageMetadata: Metadata = {
 			url: "https://www.linkedin.com/in/saskia-kriibi/",
 			name: "Saskia Kriibi",
 		},
-
+		{
+			url: "https://github.com/saskia002",
+			name: "saskia002",
+		},
 		{
 			url: "https://github.com/saskia002",
 			name: "Saskia",

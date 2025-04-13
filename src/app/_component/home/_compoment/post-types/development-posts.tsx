@@ -2,7 +2,7 @@ import { getDevelopmentPosts } from "./actions";
 import BlogCard from "../post-card";
 import { Post } from "./model";
 
-function getPostLink(post: Post): string {
+function getPostPath(post: Post): string {
 	return `/post/${post.categoryCode}/${post.slug}`;
 }
 
@@ -21,7 +21,7 @@ export default async function DevelopmentPosts() {
 						key={post.id}
 						title={post.title}
 						created={post.createdAt}
-						link={getPostLink(post)}
+						link={getPostPath(post)}
 						description={post.description}
 						views={post.views}
 						isPublic={post.isPublic}
