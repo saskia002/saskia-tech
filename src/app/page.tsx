@@ -20,7 +20,7 @@ export default function Home() {
 						</SimpleTooltip>
 						.
 					</p>
-					<SimpleTooltip hint="The code for this website can be found on here" asChild>
+					<SimpleTooltip hint="The code for this website can be found here" asChild>
 						<Button variant="ghost" asChild className="py-1! px-2! h-min w-min">
 							<a href="https://github.com/saskia002/saskia-tech" target="_blank">
 								<Github />
