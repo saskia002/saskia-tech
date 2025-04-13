@@ -9,37 +9,6 @@ html {
 	scrollbar-gutter: stable;
 }
 
-pre:has(> code) {
-	@apply bg-card py-4 pr-4 pl-12 rounded-md border;
-	counter-reset: line;
-	overflow-wrap: break-word;
-}
-
-pre code {
-	@apply inline relative pl-4 whitespace-pre-wrap break-words;
-	counter-increment: line;
-}
-
-pre code::before {
-	@apply absolute left-[-2.5rem] w-8 text-right text-muted-foreground;
-	content: counter(line);
-}
-
-/* MD `` `` or ` ` code blocks */
-md {
-	@apply bg-zinc-200/50 pb-2 pt-1.5 px-1.5 rounded-sm w-fit h-fit inline-flex align-middle leading-3 font-mono;
-	@apply dark:bg-card dark:border;
-}
-
-/* MD ``` ``` code blocks */
-pre:has(> md) > md {
-	@apply leading-6 py-2 px-3;
-}
-
-.token {
-	background: inherit !important;
-}
-
 .all-unset {
 	all: unset;
 }
@@ -178,4 +147,42 @@ h4 {
 
 p {
 	@apply text-base [&:not(:first-child)]:mt-3 first:mt-0 leading-6;
+}
+
+blockquote {
+	@apply mt-6 border-l-2 pl-6 italic;
+}
+
+/*
+	Code blocks
+*/
+pre:has(> code) {
+	@apply bg-card py-4 pr-4 pl-12 rounded-md border;
+	counter-reset: line;
+	overflow-wrap: break-word;
+}
+
+pre code {
+	@apply inline relative pl-4 whitespace-pre-wrap break-words;
+	counter-increment: line;
+}
+
+pre code::before {
+	@apply absolute left-[-2.5rem] w-8 text-right text-muted-foreground;
+	content: counter(line);
+}
+
+/* MD `` `` or ` ` code blocks */
+md {
+	@apply bg-zinc-200/50 pb-2 pt-1.5 px-1.5 rounded-sm w-fit h-fit inline-flex align-middle leading-3 font-mono;
+	@apply dark:bg-card dark:border;
+}
+
+/* MD ``` ``` code blocks */
+pre:has(> md) > md {
+	@apply leading-6 py-2 px-3;
+}
+
+.token {
+	background: inherit !important;
 }

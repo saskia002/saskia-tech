@@ -70,6 +70,7 @@ export default async function Page({ params }: Readonly<PageParams>) {
 		.replaceAll(/\u00A0/g, " ")
 		.replaceAll("&nbsp;", " ")
 		.replaceAll("<p></p>", '<div class="my-3 leading-0">&nbsp;</div>')
+		.replaceAll(/<a\s+([^>]+)>/g, "<a class='underline' $1>")
 		.replaceAll(/```([^`]*)```|``([^`]*)``|`([^`]*)`/g, (_match, tripleContent, doubleContent, singleContent) => {
 			const codeContent: string = (tripleContent || doubleContent || singleContent || "").trim().replaceAll(/<p>/g, "").replaceAll(/<\/p>/g, "\n");
 			const trimmedLine: string = codeContent.trim();
@@ -95,23 +96,27 @@ export default async function Page({ params }: Readonly<PageParams>) {
 	return (
 		<main className="w-full h-max inline-flex flex-col items-center gap-8 mb-8">
 			<article className="min-md:w-4/6 max-w-[1000px] max-md:w-8/10">
-				<div className="flex flex-col max-w-3xl w-fit">
-					<header className="block mb-6 ">
-						{/*<hgroup>*/}
-						<h2>{post.title}</h2>
-						{/*</hgroup>*/}
-						<p>
-							<time dateTime={post.createdAt.toString()}>{`${fixDateFormat(post.createdAt)} EET`}</time>
-						</p>
-						<p className="mt-2!">
-							{`${capitalizeFirstLetter(post.categoryCode)}, ${post.views === 0 ? "0 views" : `${post.views} view${post.views > 1 ? "s" : ""}`}`}
-						</p>
-						{auth && <p className="mt-2!">{post.isPublic ? "Public" : "Private"}</p>}
-						<AdminControl postId={post.id} isPublic={post.isPublic} />
-						<Separator className="mt-4" />
-					</header>
+				<div className="max-w-fit">
+					<div className="max-w-3xl ">
+						<header className="block mb-6 ">
+							{/*<hgroup>*/}
+							<h2>{post.title}</h2>
+							{/*</hgroup>*/}
+							<p>
+								<time dateTime={post.createdAt.toString()}>{`${fixDateFormat(post.createdAt)} EET`}</time>
+							</p>
+							<p className="mt-2!">
+								{`${capitalizeFirstLetter(post.categoryCode)}, ${
+									post.views === 0 ? "0 views" : `${post.views} view${post.views > 1 ? "s" : ""}`
+								}`}
+							</p>
+							{auth && <p className="mt-2!">{post.isPublic ? "Public" : "Private"}</p>}
+							<AdminControl postId={post.id} isPublic={post.isPublic} />
+							<Separator className="mt-4" />
+						</header>
 
-					<section dangerouslySetInnerHTML={{ __html: sanitizedContent }} />
+						<section dangerouslySetInnerHTML={{ __html: sanitizedContent }} />
+					</div>
 				</div>
 			</article>
 		</main>

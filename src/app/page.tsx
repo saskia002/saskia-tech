@@ -12,8 +12,8 @@ export default function Home() {
 				<p>Hello! My name is Saskia Kriibi. I work as a software engineer.</p>
 				<p>My goal is to write a new dev blog every Friday about what I've learnt during the week.</p>
 
-				<div className="flex mt-4 h-min gap-2">
-					<p className="leading-none! h-min mt-3">
+				<div className="flex mt-4 h-min gap-2 items-center">
+					<p className="leading-6! h-min mt-3">
 						This site was written using Next.js, Tailwind, Shadcn, Prisma and{" "}
 						<SimpleTooltip hint="Pronounced postgres squiil" className="cursor-help">
 							PostgreSQL
