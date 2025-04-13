@@ -196,17 +196,16 @@ export default function Pagecontent({ post, categories }: Readonly<PagecontentPr
 										<HardDriveDownload />
 									</Button>
 								</SimpleTooltip>
-							</div>
-							<div className="flex gap-3 flex-wrap">
 								<SimpleTooltip hint="Reload data" asChild>
 									<Button variant="ghost" type="reset" onClick={(e) => reloadFromDb(e)} disabled={isFormPending}>
 										<RefreshCcw />
 									</Button>
 								</SimpleTooltip>
-								<Button type="submit" disabled={isFormPending}>
-									Update
-								</Button>
 							</div>
+
+							<Button type="submit" disabled={isFormPending}>
+								Update
+							</Button>
 						</div>
 						<div className="block w-fit max-w-2xl mb-4">
 							<p>{`${fixDateFormat(post.createdAt)} EET`}</p>
