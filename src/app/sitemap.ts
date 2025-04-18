@@ -60,7 +60,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 	const domain = host.replace(/^www\./, "");
 
 	if (isProd) {
-		const allowedDomains: string[] = ["saskia.tech", "saskia002.ee"];
+		const allowedDomains: string[] = ["saskia.tech"];
 
 		if (!allowedDomains.includes(domain)) {
 			redirect("/not-found");
