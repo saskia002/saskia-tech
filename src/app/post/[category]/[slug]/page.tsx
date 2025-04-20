@@ -86,6 +86,32 @@ function getParsedHtml(content: string): string {
 			const language = lines[0].trim().toLowerCase();
 
 			return getCodeBlockByLanguage(language, lines, openingTag, closingTag);
+		})
+		.replaceAll(/<img\s+([^>]+)>/g, (match, attributes) => {
+			const uniqueId = `image-${Math.random().toString(36).substring(3, 36)}`;
+
+			return `
+				<button id="${uniqueId}" class="clickable-image" aria-hidden="true">
+					<img ${attributes} alt="" />
+					<div></div>
+					<span class="clickable-image-fullscreen-close-button hidden">&times;hello</span>
+				</button>
+				<script>
+					document.addEventListener("DOMContentLoaded", function() {
+						const imageButton = document.querySelector("#${uniqueId}");
+						const image = imageButton.querySelector("img")
+						const imagePlaceHolder = imageButton.querySelector("div")
+						const closeButton = imageButton.querySelector("span");
+
+						imageButton.addEventListener("click", function() {
+							const isGoingFullscreen = !image.classList.contains("clickable-image-fullscreen")
+							imagePlaceHolder.style.height = !isGoingFullscreen ? "0px" : image.offsetHeight + "px";
+							image.classList.toggle("clickable-image-fullscreen");
+							closeButton.classList.toggle("hidden");
+						});
+					});
+				</script>
+    		`;
 		});
 }
 
