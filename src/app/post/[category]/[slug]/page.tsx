@@ -76,14 +76,14 @@ export default async function Page({ params }: Readonly<PageParams>) {
 			const trimmedLine: string = codeContent.trim();
 
 			if (tripleContent) {
-				return `<pre><md class="md-triple">${trimmedLine}</md></pre>`;
+				return `<pre><md class="md-multiline">${trimmedLine}</md></pre>`;
 			}
 
 			if (doubleContent) {
-				return `<md class="md-double">${trimmedLine}</md>`;
+				return `<md class="md-multiline">${trimmedLine}</md>`;
 			}
 
-			return `<md >${trimmedLine}</md>`;
+			return `<md>${trimmedLine}</md>`;
 		})
 		.replaceAll(/(<pre[^>]*>)([^<]*)(<\/pre>)/g, (match, openingTag, codeContent, closingTag) => {
 			const lines: string[] = codeContent.split("\n");

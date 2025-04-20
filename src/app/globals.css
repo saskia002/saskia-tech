@@ -172,22 +172,13 @@ pre code::before {
 	content: counter(line);
 }
 
-/* MD `` `` or ` ` code blocks */
+/* MD `` ``, ` ` or ``` ``` code blocks */
 md {
 	@apply bg-zinc-200/50 pb-2 pt-1.5 px-1.5 rounded-sm w-fit h-fit inline-flex align-middle leading-3 font-mono;
 	@apply dark:bg-card dark:border;
 }
 
-.md-double {
-	@apply leading-6 py-2 px-3;
-}
-
-/* MD ``` ``` code blocks */
-/*pre:has(> md) > md {
-	@apply leading-6 py-2 px-3;
-}*/
-
-.md-triple {
+.md-multiline {
 	@apply leading-6 py-2 px-3;
 }
 
