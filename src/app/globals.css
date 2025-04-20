@@ -178,8 +178,16 @@ md {
 	@apply dark:bg-card dark:border;
 }
 
+.md-double {
+	@apply leading-6 py-2 px-3;
+}
+
 /* MD ``` ``` code blocks */
-pre:has(> md) > md {
+/*pre:has(> md) > md {
+	@apply leading-6 py-2 px-3;
+}*/
+
+.md-triple {
 	@apply leading-6 py-2 px-3;
 }
 
