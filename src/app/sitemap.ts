@@ -1,5 +1,3 @@
-"use server";
-
 import { prisma } from "@/lib/prisma";
 import { isProd } from "@/util/env-util";
 import type { MetadataRoute } from "next";
@@ -56,15 +54,10 @@ async function getPostSitemapData(): Promise<BaseSitemapData[]> {
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 	const reqHeaders = await headers();
-	const host = reqHeaders.get("host") ?? "";
-	const domain = host.replace(/^www\./, "");
+	const domain = reqHeaders.get("host") ?? "";
 
-	if (isProd) {
-		const allowedDomains: string[] = ["saskia.tech"];
-
-		if (!allowedDomains.includes(domain)) {
-			redirect("/not-found");
-		}
+	if (isProd && domain !== "saskia.tech") {
+		redirect("/not-found");
 	}
 
 	const postPages: BaseSitemapData[] = await getPostSitemapData();

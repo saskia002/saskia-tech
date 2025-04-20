@@ -5,6 +5,8 @@
 Dvelopment server:
 
 ```bash
+npm run db-migrate-dev
+npm run db-seed
 npm run dev
 ```
 
