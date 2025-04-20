@@ -153,17 +153,20 @@ blockquote {
 	@apply mt-6 border-l-2 pl-6 italic;
 }
 
-/*
-	Code blocks
-*/
+img {
+	@apply rounded;
+}
+
+/* Code blocks */
 pre:has(> code) {
-	@apply bg-card py-4 pr-4 pl-12 rounded-md border;
+	@apply bg-card py-4 pr-4 pl-12 rounded-md border overflow-x-auto w-full;
 	counter-reset: line;
 	overflow-wrap: break-word;
 }
 
 pre code {
-	@apply inline relative pl-4 whitespace-pre-wrap break-words;
+	@apply inline relative pl-4;
+	/*whitespace-pre-wrap break-words*/
 	counter-increment: line;
 }
 
@@ -171,21 +174,25 @@ pre code::before {
 	@apply absolute left-[-2.5rem] w-8 text-right text-muted-foreground;
 	content: counter(line);
 }
-
-/* MD `` ``, ` ` or ``` ``` code blocks */
-md {
-	@apply bg-zinc-200/50 py-1.5 px-1.5 rounded-sm w-fit h-fit inline-flex align-middle leading-3 font-mono;
-	@apply dark:bg-card dark:border;
-}
-
-.md-multiline {
-	@apply leading-6 py-2 px-3;
-}
-
 .token {
 	background: inherit !important;
 }
 
-img {
-	@apply rounded;
+/* Code blocks end */
+
+/* MD ` `, `` `` or ``` ``` */
+md-code {
+	@apply bg-zinc-200/50 px-1.5 py-0 rounded-sm w-fit h-min inline-flex align-baseline leading-6 font-mono;
+	@apply dark:bg-card dark:border;
 }
+
+/* cannot use them directly, styles are not loaded otherwise */
+.md-code-multiline {
+	@apply py-2 px-3;
+}
+
+.md-code-singleline {
+	@apply whitespace-pre-wrap break-words;
+}
+
+/* MD ` `, `` `` or ``` ``` end */
