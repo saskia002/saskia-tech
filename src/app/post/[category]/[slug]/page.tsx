@@ -7,7 +7,6 @@ import { getPost, incrementPostViewCount } from "./action";
 import { notFound } from "next/navigation";
 import { getServerSession } from "@/lib/auth/server-session";
 import { capitalizeFirstLetter } from "@/util/string-util";
-
 import "prismjs/themes/prism.min.css";
 
 function getUndefinedCodeBlock(lines: string[]): string {
@@ -57,16 +56,8 @@ function getCodeBlockByLanguage(language: string, lines: string[], openingTag: s
 	return `${openingTag.replace(/\s*data-language="plain"/g, "")}${code}${closingTag}`;
 }
 
-export default async function Page({ params }: Readonly<PageParams>) {
-	const auth = await getServerSession();
-	const paramData: DynamicPathParams = await params;
-	const post: Post | null = await getPost(paramData.category, paramData.slug);
-	if (!post) {
-		notFound();
-	}
-	await incrementPostViewCount(post.id);
-
-	const sanitizedContent: string = DOMPurify.sanitize(post.content)
+function getParsedHtml(content: string): string {
+	return DOMPurify.sanitize(content)
 		.replaceAll(/\u00A0/g, " ")
 		.replaceAll("&nbsp;", " ")
 		.replaceAll("<p></p>", '<div class="my-3 leading-0">&nbsp;</div>')
@@ -96,6 +87,18 @@ export default async function Page({ params }: Readonly<PageParams>) {
 
 			return getCodeBlockByLanguage(language, lines, openingTag, closingTag);
 		});
+}
+
+export default async function Page({ params }: Readonly<PageParams>) {
+	const auth = await getServerSession();
+	const paramData: DynamicPathParams = await params;
+	const post: Post | null = await getPost(paramData.category, paramData.slug);
+	if (!post) {
+		notFound();
+	}
+	await incrementPostViewCount(post.id);
+
+	const sanitizedContent: string = getParsedHtml(post.content);
 
 	return (
 		<main className="w-full h-max inline-flex flex-col items-center gap-8 mb-8">
