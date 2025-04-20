@@ -174,7 +174,7 @@ pre code::before {
 
 /* MD `` ``, ` ` or ``` ``` code blocks */
 md {
-	@apply bg-zinc-200/50 pb-2 pt-1.5 px-1.5 rounded-sm w-fit h-fit inline-flex align-middle leading-3 font-mono;
+	@apply bg-zinc-200/50 py-1.5 px-1.5 rounded-sm w-fit h-fit inline-flex align-middle leading-3 font-mono;
 	@apply dark:bg-card dark:border;
 }
 
@@ -184,4 +184,8 @@ md {
 
 .token {
 	background: inherit !important;
+}
+
+img {
+	@apply rounded;
 }
