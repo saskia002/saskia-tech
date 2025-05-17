@@ -4,6 +4,7 @@ import { getServerSession } from "@/lib/auth/server-session";
 import { prisma } from "@/lib/prisma";
 import { Category, Post } from "./model";
 import { z } from "zod";
+import { removeEmojis } from "@/util/string-util";
 
 export async function getPost(id: number): Promise<Post | null> {
 	const auth = await getServerSession();
@@ -72,6 +73,8 @@ export async function updatePost(id: number, formData: FormData): Promise<Post> 
 	if (parsedData.success) {
 		const { title, description, category, content } = parsedData.data;
 
+		const slug = encodeURIComponent(removeEmojis(title).trim().toLowerCase().replaceAll(" ", "-").replace(/-$/, ""));
+
 		const data = await prisma.post.update({
 			where: {
 				id: id,
@@ -80,6 +83,7 @@ export async function updatePost(id: number, formData: FormData): Promise<Post> 
 				title: title,
 				description: description,
 				content: content,
+				slug: slug,
 				...(category ? { categoryCode: category } : {}),
 			},
 			select: {
