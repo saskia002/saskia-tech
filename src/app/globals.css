@@ -182,7 +182,7 @@ pre code::before {
 
 /* MD ` `, `` `` or ``` ``` */
 md-code {
-	@apply bg-zinc-200/50 px-1.5 py-0 rounded-sm w-fit h-min inline-flex align-baseline leading-6 font-mono;
+	@apply bg-zinc-200/50 px-1.5 py-0 rounded-sm w-fit h-min inline-flex flex-col align-baseline leading-6 font-mono;
 	@apply dark:bg-card dark:border;
 }
 
