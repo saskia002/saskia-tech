@@ -19,7 +19,7 @@ export const pageMetadata: Metadata = {
 		siteName: "Saskia",
 		images: [
 			{
-				url: "/favicon.ico",
+				url: "https://saskia.tech/favicon.ico",
 				width: 256,
 				height: 256,
 				alt: "Saskia - Homepage",
