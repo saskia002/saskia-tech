@@ -1,18 +1,23 @@
 #!/bin/bash
 
+# This is used on linux vps to deploy the latest code from git repository and restart the web service
+# Usage: ./deploy.sh
+# Make sure to give execute permission to the script before running it
 # chmod +x deploy.sh
+
 
 # some shell commnad
 # if [ $? -eq 0 ] <-- if 0 then success else failed
 
+# Ensure the script is run as root
+#if [ "$(id -u)" -ne 0 ]; then
+#    echo "Please run this script as root or using sudo."
+#    exit 1
+#fi
+
+
 set -e
 set -o pipefail
-
-# Ensure the script is run as root
-if [ "$(id -u)" -ne 0 ]; then
-    echo "Please run this script as root or using sudo."
-    exit 1
-fi
 
 
 if git pull; then
