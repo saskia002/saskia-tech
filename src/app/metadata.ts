@@ -24,6 +24,12 @@ export const pageMetadata: Metadata = {
 				height: 630,
 				alt: "Saskia - Homepage",
 			},
+			{
+				url: "https://saskia.tech/favicon.ico",
+				width: 256,
+				height: 256,
+				alt: "Saskia - Homepage",
+			},
 		],
 	},
 	description: "Saskia's homepage. I post about coding, IT and other things I find interesting.",
