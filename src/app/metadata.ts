@@ -6,7 +6,27 @@ export const pageMetadata: Metadata = {
 		template: "Saskia - %s",
 		default: "Saskia - Homepage",
 	},
-	description: "Portfolio and a blog. I post about coding, IT and other things I find interesting.",
+	icons: {
+		icon: "/favicon.ico",
+		shortcut: "/favicon.ico",
+		apple: "/favicon.ico",
+	},
+	openGraph: {
+		title: "Saskia - Homepage",
+		description: "Saskia's homepage. I post about coding, IT and other things I find interesting.",
+		url: "https://saskia.tech",
+		type: "website",
+		siteName: "Saskia",
+		images: [
+			{
+				url: "/favicon.ico",
+				width: 256,
+				height: 256,
+				alt: "Saskia - Homepage",
+			},
+		],
+	},
+	description: "Saskia's homepage. I post about coding, IT and other things I find interesting.",
 	keywords: [
 		"Saskia",
 		"saskia",
@@ -44,14 +64,6 @@ export const pageMetadata: Metadata = {
 			name: "Saskia",
 		},
 		{
-			url: "https://saskia002.ee/",
-			name: "Saskia Kriibi",
-		},
-		{
-			url: "https://saskia002.ee/",
-			name: "Saskia",
-		},
-		{
 			url: "https://www.linkedin.com/in/saskia-kriibi/",
 			name: "Saskia",
 		},
@@ -72,9 +84,4 @@ export const pageMetadata: Metadata = {
 			name: "Saskia Kriibi",
 		},
 	],
-	formatDetection: {
-		email: false,
-		address: false,
-		telephone: false,
-	},
 };

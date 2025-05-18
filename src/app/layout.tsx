@@ -3,7 +3,7 @@ import type { Metadata } from "next";
 import Header from "@/app/_component/header/header";
 import AuthProvider from "@/provider/auth-provider";
 import { Toaster } from "@/component/ui/sonner";
-import { pageMetadata } from "@/app/page-metadata";
+import { pageMetadata } from "@/app/metadata";
 import { getServerSession } from "@/lib/auth/server-session";
 import { LayoutProps } from "@/model/layout";
 import "./globals.css";
