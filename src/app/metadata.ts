@@ -20,8 +20,8 @@ export const pageMetadata: Metadata = {
 		images: [
 			{
 				url: "https://saskia.tech/og-image.jpg",
-				width: 256,
-				height: 256,
+				width: 1200,
+				height: 630,
 				alt: "Saskia - Homepage",
 			},
 		],
