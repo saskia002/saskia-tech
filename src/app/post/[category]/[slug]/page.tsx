@@ -25,10 +25,40 @@ function getUndefinedCodeBlock(lines: string[]): string {
 		.join("\n");
 }
 
+function highlightCode(code: string, language: string): string {
+	const languageLower = language.toLowerCase().trim();
+	const Prism = require("prismjs");
+
+	const tempCode: string[] = code.trim().split("\n");
+	tempCode.shift();
+
+	try {
+		require(`prismjs/components/prism-${languageLower}`);
+
+		code = tempCode
+			.map((line: string) => {
+				if (line === "") {
+					return ``;
+				}
+
+				line = line.replaceAll("&gt;", ">").replaceAll("&lt;", "<").trim();
+
+				return `${Prism.highlight(line, Prism.languages[languageLower], languageLower)}`;
+			})
+			.join("\n");
+	} catch (_) {
+		return code;
+	}
+
+	return code;
+}
+
 function getCodeBlockByLanguage(language: string, lines: string[], openingTag: string, closingTag: string): string {
+	const languageLower = language.toLowerCase().trim();
+
 	const Prism = require("prismjs");
 	try {
-		require(`prismjs/components/prism-${language.toLowerCase()}`);
+		require(`prismjs/components/prism-${languageLower}`);
 	} catch (_) {
 		return `<pre>${getUndefinedCodeBlock(lines)}</pre>`;
 	}
@@ -48,33 +78,38 @@ function getCodeBlockByLanguage(language: string, lines: string[], openingTag: s
 		})
 		.join("\n");
 
-	const code = Prism.highlight(wrappedCode, Prism.languages[language], language)
+	const code = Prism.highlight(wrappedCode, Prism.languages[languageLower], languageLower)
 		.replaceAll(/ϴ___temp_code_block___ϴ/g, "<code>")
 		.replaceAll(/ϴ___temp_code_block_end___ϴ/g, "</code>")
 		.replaceAll(/ϴ___empty_line___ϴ/g, "<code></code>");
 
-	return `${openingTag.replace(/\s*data-language="plain"/g, "")}${code}${closingTag}`;
+	return `${openingTag.replace(/data-language="plain"/, `data-language="${languageLower}"`)}${code}${closingTag}`;
 }
 
 function getParsedHtml(content: string): string {
 	return DOMPurify.sanitize(content)
 		.replaceAll(/\u00A0/g, " ")
 		.replaceAll("&nbsp;", " ")
-		.replaceAll("<p></p>", '<div class="my-3 leading-0">&nbsp;</div>')
-		.replaceAll(/<a\s+([^>]+)>/g, "<a class='underline' $1>")
-		.replaceAll(/```([^`]*)```|``([^`]*)``|`([^`]*)`/g, (_match, tripleContent, doubleContent, singleContent) => {
-			const codeContent: string = (tripleContent || doubleContent || singleContent || "").trim().replaceAll(/<p>/g, "").replaceAll(/<\/p>/g, "\n");
-			const trimmedLine: string = codeContent.trim();
+		.replaceAll(/```([^`]*)```|``([^`]*)``|`([^`]*)`/g, (match, tripleContent, doubleContent, singleContent) => {
+			const codeContent: string = (tripleContent ?? doubleContent ?? singleContent ?? "").replaceAll(/<p>/g, "").replaceAll(/<\/p>/g, "\n").trim();
+
+			const langRegex: RegExp = /`{1,3}(\w+)/;
+			const language: string | undefined =
+				!!doubleContent || !!tripleContent ? langRegex.exec(match.replaceAll(/<p>/g, "").replaceAll(/<\/p>/g, "\n").split("\n")[0])?.[1] : undefined;
+
+			const finalCode: string = language ? highlightCode(codeContent, language) : codeContent;
+
+			const dataLaguageProperty: string = language ? `data-language="${language.toLowerCase()}"` : "";
 
 			if (tripleContent) {
-				return `<pre class="overflow-x-auto"><md-code class="md-code-multiline">${trimmedLine}</md-code></pre>`;
+				return `<pre class="overflow-x-auto"><md-code class="md-code-multiline" ${dataLaguageProperty}>${finalCode}</md-code></pre>`;
 			}
 
 			if (doubleContent) {
-				return `<div class="overflow-x-auto"><md-code class="md-code-multiline">${trimmedLine}</md-code></div>`;
+				return `<div class="overflow-x-auto"><md-code class="md-code-multiline" ${dataLaguageProperty}>${finalCode}</md-code></div>`;
 			}
 
-			return `<md-code class="md-code-singleline">${trimmedLine}</md-code>`;
+			return `<md-code class="md-code-singleline" ${dataLaguageProperty}>${finalCode}</md-code>`;
 		})
 		.replaceAll(/(<pre[^>]*>)([^<]*)(<\/pre>)/g, (match, openingTag, codeContent, closingTag) => {
 			const lines: string[] = codeContent.split("\n");
@@ -86,7 +121,10 @@ function getParsedHtml(content: string): string {
 			const language = lines[0].trim().toLowerCase();
 
 			return getCodeBlockByLanguage(language, lines, openingTag, closingTag);
-		});
+		})
+
+		.replaceAll("<p></p>", '<div class="my-3 leading-0">&nbsp;</div>')
+		.replaceAll(/<a\s+([^>]+)>/g, "<a class='underline' $1>");
 }
 
 export default async function Page({ params }: Readonly<PageParams>) {

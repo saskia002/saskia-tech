@@ -159,21 +159,22 @@ img {
 
 /* Code blocks */
 pre:has(> code) {
-	@apply bg-card py-4 pr-4 pl-12 rounded-md border overflow-x-auto w-full;
+	@apply bg-card py-4 pr-4 pl-12 rounded-md border overflow-x-auto;
 	counter-reset: line;
 	overflow-wrap: break-word;
 }
 
-pre code {
-	@apply inline relative pl-4;
+pre > code {
+	@apply inline relative pl-4 w-full;
 	/*whitespace-pre-wrap break-words*/
 	counter-increment: line;
 }
 
-pre code::before {
+pre > code::before {
 	@apply absolute left-[-2.5rem] w-8 text-right text-muted-foreground;
 	content: counter(line);
 }
+
 .token {
 	background: inherit !important;
 }
@@ -193,6 +194,11 @@ md-code {
 
 .md-code-singleline {
 	@apply whitespace-pre-wrap break-words;
+}
+
+md-code.md-code-multiline {
+	display: inherit !important;
+	white-space: pre;
 }
 
 /* MD ` `, `` `` or ``` ``` end */
