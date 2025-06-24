@@ -38,7 +38,7 @@ function highlightCode(code: string, language: string): string {
 		code = tempCode
 			.map((line: string) => {
 				if (line === "") {
-					return ``;
+					return "";
 				}
 
 				line = line.replaceAll("&gt;", ">").replaceAll("&lt;", "<").trim();
@@ -86,6 +86,16 @@ function getCodeBlockByLanguage(language: string, lines: string[], openingTag: s
 	return `${openingTag.replace(/data-language="plain"/, `data-language="${languageLower}"`)}${code}${closingTag}`;
 }
 
+/* INFO:
+
+		NB!
+
+
+			This code is really ugly, please don't copy and use this in your own projects. (Me slowly rewriting WordPress in Next.js :D)
+
+
+		NB!
+*/
 function getParsedHtml(content: string): string {
 	return DOMPurify.sanitize(content)
 		.replaceAll(/\u00A0/g, " ")
