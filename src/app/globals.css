@@ -175,8 +175,8 @@ pre > code::before {
 	content: counter(line);
 }
 
-.token {
-	background: inherit !important;
+.token.operator {
+	@apply !bg-transparent;
 }
 
 /* Code blocks end */
