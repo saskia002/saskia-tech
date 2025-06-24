@@ -88,15 +88,12 @@ export default function Pagecontent({ post, categories }: Readonly<PagecontentPr
 
 	const getLocalStoragePostData = (): LocalStoragePostData | undefined => {
 		const data = localStorage.getItem("ADMIN_POST_EDITOR_DATA");
-		console.log(data);
 		return data ? JSON.parse(data) : undefined;
 	};
 
 	const clearCache = (e: React.MouseEvent<HTMLButtonElement>) => {
 		localStorage.setItem("ADMIN_POST_EDITOR_DATA", JSON.stringify({}));
 		localStorage.removeItem("ADMIN_POST_EDITOR_DATA");
-
-		console.log(localStorage.getItem("ADMIN_POST_EDITOR_DATA"));
 	};
 
 	if (ReactQuill && typeof typeof window !== "undefined") {

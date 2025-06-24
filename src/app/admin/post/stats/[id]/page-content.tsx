@@ -12,7 +12,6 @@ type PagecontentProps = {
 export default function Pagecontent({ postDataAndStats }: Readonly<PagecontentProps>) {
 	const { post, stats } = postDataAndStats;
 
-	console.log(postDataAndStats);
 	return (
 		<main className="w-full h-max inline-flex flex-col items-center mb-8">
 			<section className="min-md:w-4/6 max-w-[1000px] max-md:w-8/10 gap-3">
