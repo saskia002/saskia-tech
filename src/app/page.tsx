@@ -9,8 +9,8 @@ export default function Home() {
 			<section className="min-md:w-4/6 max-w-[1000px] max-md:w-8/10">
 				<h2>Info</h2>
 
-				<p>Hello! My name is Saskia Kriibi. I work as a software engineer.</p>
-				<p>My goal is to write a new dev blog every Friday about what I've learnt during the week.</p>
+				<p>Hi, I'm Saskia! I'm a software engineer and Data Science & Artificial Intelligence MSc student.</p>
+				{/*<p>My goal is to write a new dev blog every Friday about what I've learnt during the week.</p>*/}
 
 				<div className="flex mt-4 h-min gap-2 items-center">
 					<p className="leading-6! h-min mt-3">
